@@ -1,12 +1,10 @@
 # Awaiting
 
-The async/await utility library for browsers and Node.js.
+The async/await utility for browsers and Node.js.
 
 [Docs](api.md)
 
-```js
-const a = require('awaiting')
-```
+## Examples
 
 ```js
 // await times...
@@ -24,13 +22,13 @@ const pages = await a.map(urls, 3, async url => await fetch(url))
 // await successes or errors...
 const err = await a.rejection(shouldFail)
 const success = await a.result(optionalStep)
-
-// ...and much more.
 ```
+
+See all options in [the docs](api.md).
 
 ## Installation
 
-In a browser:
+### Browser
 
 ```html
 <script src='awaiting.js'></script>
@@ -40,7 +38,7 @@ In a browser:
 </script>
 ```
 
-In Node.js:
+### Node.js
 
 ```
 $ yarn add awaiting
@@ -50,6 +48,13 @@ $ yarn add awaiting
 
 ```
 $ npm install --save awaiting
+```
+
+*then*
+
+```js
+const a = require('awaiting')
+await a.delay(1000)
 ```
 
 ## Testing
