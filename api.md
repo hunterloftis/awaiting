@@ -8,7 +8,6 @@
 -   [event](#event)
 -   [callback](#callback)
 -   [group](#group)
--   [series](#series)
 -   [map](#map)
 -   [race](#race)
 -   [rejection](#rejection)
@@ -129,28 +128,23 @@ console.log(results.length)
 
 Returns **[array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)** promised results in order
 
-## series
-
-Waits for each Promise in `list` sequentially,
-throwing an Error if any rejects.
-Once complete, returns an Array of each result.
-
-**Parameters**
-
--   `list`  
-
 ## map
 
-Resolves each Promise in `list`,
-running at most `concurrency` items in parallel.
-Throws an Error if anything in `list` rejects.
-Returns Array of each result in `list`
+Passes each item in `list` to the Promise-returning function `fn`,
+running at most `concurrency` simultaneous promises.
+Throws an Error if any promise rejects.
 
 **Parameters**
 
--   `list`  
--   `concurrency`  
--   `fn`  
+-   `list` **[array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)** items to pass to each promise
+-   `concurrency` **[number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)** maximum concurrency
+-   `fn` **[function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function)** takes an item and returns a Promise
+
+**Examples**
+
+```javascript
+const pages = await a.map(urls, 3, fetch)
+```
 
 ## race
 

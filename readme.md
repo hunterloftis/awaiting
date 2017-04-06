@@ -21,9 +21,6 @@ await a.event(server, 'listen')
 // await callbacks
 const contents = await a.callback(fs.readFile, 'foo.txt')
 
-// run a series of async functions
-const results = await a.series([foo, bar, baz])
-
 // map an array to an async function with a concurrency of 3
 const pages = await a.map(urls, 3, async url => await fetch(url))
 
