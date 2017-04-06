@@ -1,0 +1,23 @@
+{
+  "name": "awaiting",
+  "version": "1.0.0",
+  "engines": {
+    "node": ">=7.6.x"
+  },
+  "scripts": {
+    "prettify": "standard --fix 'bin/*' 'lib/**/*.js'",
+    "lint": "standard 'bin/*' 'lib/**/*.js'",
+    "secure": "nsp check",
+    "spec": "mocha --bail test/*.test.js",
+    "test": "yarn lint && yarn secure && yarn spec",
+    "doc": "documentation build lib/awaiting.js -f md -o api.md"
+  },
+  "main": "lib/awaiting.js",
+  "license": "MIT",
+  "devDependencies": {
+    "mocha": "^3.2.0",
+    "nodemon": "^1.11.0",
+    "nsp": "^2.6.2",
+    "standard": "^8.6.0"
+  }
+}
