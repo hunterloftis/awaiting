@@ -34,7 +34,7 @@ const success = await a.resolution(optionalStep)
 const err = await a.rejection(shouldFail)
 ```
 
-And much more in [the docs](api.md).
+...and more in [the docs](api.md).
 
 ## Installation
 

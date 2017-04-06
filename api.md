@@ -92,13 +92,13 @@ Returns **[promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Refe
 
 ## callback
 
-Calls a function `func` that takes arguments `args` and an (err, result) callback.
+Calls a function `func` that takes arguments `args` and an `(err, result)` callback.
 Waits for the callback result, throwing an Error if err is truthy.
 
 **Parameters**
 
 -   `fn` **[function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function)** a function that takes a callback
--   `args` **...[object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** arguments to pass to the function
+-   `args` **...[object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** arguments to pass to `fn`
 
 **Examples**
 
@@ -112,14 +112,22 @@ Returns **[promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Refe
 
 ## set
 
-Waits for `count` Promises in `list` to resolve (all, by default).
+Waits for all Promises in `list` to resolve.
 Throws an Error if anything in `list` rejects.
-Returns an Array of each result in `list`.
 
 **Parameters**
 
--   `list`  
--   `count`  
+-   `list` **[array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)** a list of promises
+
+**Examples**
+
+```javascript
+const results = await a.set([ foo, bar, baz ])
+console.log(results.length)
+// => 3
+```
+
+Returns **[array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)** the promised results in order
 
 ## series
 
