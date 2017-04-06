@@ -10,12 +10,13 @@
     "secure": "nsp check",
     "test": "mocha --bail test/*.test.js",
     "doc": "documentation build lib/awaiting.js -f md -o api.md",
-    "package": "yarn lint && yarn secure && yarn test && yarn doc"
+    "build": "yarn lint && yarn secure && yarn test && yarn doc"
   },
   "main": "lib/awaiting.js",
   "license": "MIT",
   "devDependencies": {
     "chai": "^3.5.0",
+    "documentation": "^4.0.0-beta.18",
     "mocha": "^3.2.0",
     "nodemon": "^1.11.0",
     "nsp": "^2.6.2",

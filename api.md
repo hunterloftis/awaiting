@@ -4,7 +4,7 @@
 
 -   [delay](#delay)
 -   [time](#time)
--   [limited](#limited)
+-   [limit](#limit)
 -   [event](#event)
 -   [callback](#callback)
 -   [set](#set)
@@ -14,6 +14,7 @@
 -   [rejection](#rejection)
 -   [resolution](#resolution)
 -   [result](#result)
+-   [unhandled](#unhandled)
 
 ## delay
 
@@ -40,17 +41,37 @@ Waits for `date`.
 
 **Parameters**
 
--   `date`  
+-   `date` **[date](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date)** the date-time at which to stop waiting
 
-## limited
+**Examples**
 
-Runs both `goal` and `limit` and waits for the value of `goal`.
-If `limit` finishes first, throws an Error.
+```javascript
+const end = Date.now() + 1000
+await time(end)
+console.log('One second later')
+```
+
+Returns **[promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)** 
+
+## limit
+
+Waits for the value of `goal`, limited by the resolution of `limiter`.
+Throws an Error if `limiter` finishes first or if either throws early.
+If `limiter` is a number, limits by time in milliseconds
 
 **Parameters**
 
--   `goal`  
--   `limit`  
+-   `goal` **[promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)** the promise to execute
+-   `limiter` **([number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number) \| [promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise))** milliseconds or promise to limit by
+
+**Examples**
+
+```javascript
+// throw if flowers.jpg can't be retrieved in < 5 seconds
+await limit(fetch('flowers.jpg'), 5000)
+```
+
+Returns **[promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)** 
 
 ## event
 
@@ -139,3 +160,14 @@ Returns either the resolved value, or the Error object.
 **Parameters**
 
 -   `promise`  
+
+## unhandled
+
+Handles 'unhandledRejection' events.
+Provides a stack trace of Error objects in addition to the default message string.
+If `silent` is truthy, silently swallows unhandled Promise errors.
+Idempotent; can be called multiple times but will only attach a single listener.
+
+**Parameters**
+
+-   `silent`  
