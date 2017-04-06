@@ -9,7 +9,7 @@
 -   [callback](#callback)
 -   [set](#set)
 -   [series](#series)
--   [throttle](#throttle)
+-   [map](#map)
 -   [race](#race)
 -   [rejection](#rejection)
 -   [resolution](#resolution)
@@ -41,14 +41,14 @@ Waits for `date`.
 
 **Parameters**
 
--   `date` **[date](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date)** the date-time at which to stop waiting
+-   `date` **[date](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date)** the date at which to stop waiting
 
 **Examples**
 
 ```javascript
-const end = Date.now() + 1000
-await time(end)
-console.log('One second later')
+const nextYear = new Date(2018, 1)
+await time(nextYear)
+// => this will run until the end of 2017
 ```
 
 Returns **[promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)** 
@@ -79,8 +79,16 @@ Waits for `emitter` to emit an `eventName` event.
 
 **Parameters**
 
--   `emitter`  
--   `eventName`  
+-   `emitter` **EventEmitter** the object to listen on
+-   `eventName` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** the event to listen for
+
+**Examples**
+
+```javascript
+await a.event(server, 'listen')
+```
+
+Returns **[promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)&lt;[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)>** an array of the arguments passed to the `eventName` event
 
 ## callback
 
@@ -89,8 +97,18 @@ Waits for the callback result, throwing an Error if err is truthy.
 
 **Parameters**
 
--   `func`  
--   `args` **...any** 
+-   `fn` **[function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function)** a function that takes a callback
+-   `args` **...[object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** arguments to pass to the function
+
+**Examples**
+
+```javascript
+const result = await a.callback(fs.readFile, 'foo.txt')
+console.log(result)
+// => 'the text of the file'
+```
+
+Returns **[promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)** the result passed to the callback
 
 ## set
 
@@ -113,7 +131,7 @@ Once complete, returns an Array of each result.
 
 -   `list`  
 
-## throttle
+## map
 
 Resolves each Promise in `list`,
 running at most `concurrency` items in parallel.
@@ -124,6 +142,7 @@ Returns Array of each result in `list`
 
 -   `list`  
 -   `concurrency`  
+-   `fn`  
 
 ## race
 
