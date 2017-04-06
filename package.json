@@ -8,13 +8,14 @@
     "prettify": "standard --fix 'lib/**/*.js'",
     "lint": "standard 'lib/**/*.js'",
     "secure": "nsp check",
-    "spec": "mocha --bail test/*.test.js",
+    "test": "mocha --bail test/*.test.js",
     "doc": "documentation build lib/awaiting.js -f md -o api.md",
-    "package": "yarn lint && yarn secure && yarn spec && yarn doc"
+    "package": "yarn lint && yarn secure && yarn test && yarn doc"
   },
   "main": "lib/awaiting.js",
   "license": "MIT",
   "devDependencies": {
+    "chai": "^3.5.0",
     "mocha": "^3.2.0",
     "nodemon": "^1.11.0",
     "nsp": "^2.6.2",
