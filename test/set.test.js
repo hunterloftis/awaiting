@@ -1,14 +1,14 @@
 const a = require('..')
 const assert = require('chai').assert
 
-describe('set', () => {
+describe('group', () => {
   it('returns the results of all promises', async () => {
-    const results = await a.set([ p('foo'), p('bar'), p('baz') ])
+    const results = await a.group([ p('foo'), p('bar'), p('baz') ])
     assert.deepEqual(results, ['foo', 'bar', 'baz'])
   })
   it('throws if one of the first `count` results throws', async () => {
     try {
-      const results = await a.set([ p('foo', 100), f(50), p('baz', 10)])
+      const results = await a.group([ p('foo', 100), f(50), p('baz', 10)])
       throw new Error('should fail')
     }
     catch (err) {

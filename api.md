@@ -7,7 +7,7 @@
 -   [limit](#limit)
 -   [event](#event)
 -   [callback](#callback)
--   [set](#set)
+-   [group](#group)
 -   [series](#series)
 -   [map](#map)
 -   [race](#race)
@@ -110,24 +110,24 @@ console.log(result)
 
 Returns **[promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)** the result passed to the callback
 
-## set
+## group
 
 Waits for all Promises in `list` to resolve.
 Throws an Error if anything in `list` rejects.
 
 **Parameters**
 
--   `list` **[array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)** a list of promises
+-   `list` **[array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)** promises
 
 **Examples**
 
 ```javascript
-const results = await a.set([ foo, bar, baz ])
+const results = await a.group([ foo, bar, baz ])
 console.log(results.length)
 // => 3
 ```
 
-Returns **[array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)** the promised results in order
+Returns **[array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)** promised results in order
 
 ## series
 
