@@ -1,3 +1,3 @@
 # Awaiting
 
-The async/await utility belt for Node.js
+The async/await utility library for Node.js.
