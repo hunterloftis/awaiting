@@ -143,6 +143,7 @@ Throws an Error if any promise rejects.
 **Examples**
 
 ```javascript
+// pull hundreds of pages from a site without getting blocked
 const pages = await a.map(urls, 3, fetch)
 ```
 
@@ -153,7 +154,15 @@ Throws an Error if anything in `list` rejects.
 
 **Parameters**
 
--   `list`  
+-   `list` **[array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;[Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)>** racing promises
+
+**Examples**
+
+```javascript
+const file = await a.race(fetch(remoteFile), read(localFile))
+```
+
+Returns **[promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)** 
 
 ## rejection
 
