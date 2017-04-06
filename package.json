@@ -5,12 +5,12 @@
     "node": ">=7.6.x"
   },
   "scripts": {
-    "prettify": "standard --fix 'bin/*' 'lib/**/*.js'",
-    "lint": "standard 'bin/*' 'lib/**/*.js'",
+    "prettify": "standard --fix 'lib/**/*.js'",
+    "lint": "standard 'lib/**/*.js'",
     "secure": "nsp check",
     "spec": "mocha --bail test/*.test.js",
-    "test": "yarn lint && yarn secure && yarn spec",
-    "doc": "documentation build lib/awaiting.js -f md -o api.md"
+    "doc": "documentation build lib/awaiting.js -f md -o api.md",
+    "package": "yarn lint && yarn secure && yarn spec && yarn doc"
   },
   "main": "lib/awaiting.js",
   "license": "MIT",
