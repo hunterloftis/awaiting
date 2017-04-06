@@ -2,6 +2,8 @@
 
 The async/await utility for browsers and Node.js.
 
+**Just getting this set up / published / documented now. Should be usable in about 24 hours.**
+
 [Docs](api.md)
 
 ## Examples
@@ -22,7 +24,7 @@ const contents = await a.callback(fs.readFile, 'foo.txt')
 // run a series of async functions
 const results = await a.series([foo, bar, baz])
 
-// map an array to an async function, throttling concurrency to 3
+// map an array to an async function with a concurrency of 3
 const pages = await a.map(urls, 3, async url => await fetch(url))
 
 // await successes (ignoring errors)
