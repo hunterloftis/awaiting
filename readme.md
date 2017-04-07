@@ -49,7 +49,7 @@ await a.delay(1000)
 
 ### In a browser
 
-Use [browser/awaiting.js](browser/awaiting.js):
+Use [https://raw.githubusercontent.com/hunterloftis/awaiting/master/browser/awaiting.js](browser/awaiting.js):
 
 ```html
 <script src='awaiting.js'></script>
