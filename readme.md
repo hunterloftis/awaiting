@@ -2,7 +2,7 @@
 
 The async/await utility for browsers and Node.js.
 
-[API Docs](https://hunterloftis.github.io/awaiting/api.html) | [Examples](#examples) | [Installation](#installation) | [GitHub](https://github.com/hunterloftis/awaiting)
+[API Docs](https://hunterloftis.github.io/awaiting) | [Examples](#examples) | [Installation](#installation) | [GitHub](https://github.com/hunterloftis/awaiting)
 
 - Node.js >= 0.7.6
 - Edge >= 15
@@ -36,7 +36,7 @@ const pages = await a.map(urls, 3, async url => await fetch(url))
 const optionalFeature = await a.resolution(optionalStep)
 ```
 
-...and more in [the API Docs](https://hunterloftis.github.io/awaiting/api.html).
+...and more in [the API Docs](https://hunterloftis.github.io/awaiting).
 
 ## Motivation
 

@@ -9,16 +9,16 @@
     "secure": "nsp check",
     "test": "mocha --bail test/*.test.js test/node/*.test.js",
     "test:browser": "yarn browserify:tests && open test/browser/index.html",
-    "docs:api": "documentation build -f html --sort-order alpha -g -o docs && mv docs/index.html docs/api.html",
-    "docs:home": "markdown readme.md --title awaiting --context hunterloftis/awaiting --stylesheet style.css --flavor gfm > docs/index.html",
-    "docs": "yarn docs:api && yarn docs:home",
+    "docs": "documentation build -f html --sort-order alpha -g -o docs",
+    "docs:old": "markdown readme.md --title awaiting --context hunterloftis/awaiting --stylesheet style.css --flavor gfm > docs/index.html",
     "browserify:lib": "browserify lib/awaiting.js --standalone awaiting -o browser/awaiting.js",
     "browserify:tests": "browserify test/*.test.js -o test/browser/test.js",
     "browserify": "yarn browserify:lib && yarn browserify:tests",
     "build": "yarn install && yarn lint && yarn secure && yarn test && yarn browserify && yarn docs",
     "safe": "git diff-index --quiet master --",
-    "release:docs": "git subtree push --prefix docs origin gh-pages",
-    "release": "yarn safe && yarn build && yarn version && npm publish --registry 'https://registry.npmjs.org/' && yarn release:docs"
+
+    "release": "yarn safe && yarn build && yarn version && npm publish --registry 'https://registry.npmjs.org/'",
+    "release:docs": "git subtree push --prefix docs origin gh-pages"
   },
   "main": "lib/awaiting.js",
   "license": "MIT",
