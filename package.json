@@ -16,7 +16,7 @@
     "build": "yarn install && yarn lint && yarn secure && yarn test && yarn browserify && yarn docs",
     "safe": "git diff-index --quiet master --",
     "release:docs": "git subtree push --prefix docs origin gh-pages",
-    "release": "yarn safe && yarn build && yarn version && npm publish && yarn release:docs"
+    "release": "yarn safe && yarn build && yarn version && npm publish --userconfig ~/.npmrc && yarn release:docs"
   },
   "main": "lib/awaiting.js",
   "license": "MIT",
