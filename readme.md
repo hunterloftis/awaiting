@@ -16,6 +16,7 @@ The async/await utility for browsers and Node.js.
 - iOS Safari >= 10.3
 
 [![Build Status](https://travis-ci.org/hunterloftis/awaiting.svg?branch=master)](https://travis-ci.org/hunterloftis/awaiting)
+[![Coverage Status](https://coveralls.io/repos/hunterloftis/awaiting/badge.svg?branch=master)](https://coveralls.io/r/hunterloftis/awaiting?branch=master)
 
 ## Installation
 
