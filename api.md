@@ -228,20 +228,19 @@ Provides a stack trace for unhandled rejections instead of the default message s
 ```javascript
 // without throw
 failingPromise()
+// => (node:6051) UnhandledPromiseRejectionWarning: Unhandled promise rejection (rejection id: 1): Error: fail
+```
 
-(node:6051) UnhandledPromiseRejectionWarning: Unhandled promise rejection (rejection id: 1): Error: fail
-
+```javascript
 // get useful information when rejections happen
 a.throw()
 failingPromise()
-
-/Users/hloftis/code/awaiting/lib/awaiting.js:308
-function throwOnRejection (err, promise) { throw err }
-                                           ^
-
-Error: fail
-   at fail (/Users/hloftis/code/awaiting/test/fixtures/rejection-throw.js:7:9)
-   at Object.<anonymous> (/Users/hloftis/code/awaiting/test/fixtures/rejection-throw.js:4:1)
+// => /Users/hloftis/code/awaiting/lib/awaiting.js:308
+// => function throwOnRejection (err, promise) { throw err }
+// =>                                            ^
+// => Error: fail
+// =>    at fail (/Users/hloftis/code/awaiting/test/fixtures/rejection-throw.js:7:9)
+// =>    at Object.<anonymous> (/Users/hloftis/code/awaiting/test/fixtures/rejection-throw.js:4:1)
 ```
 
 Returns **[undefined](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined)** 
