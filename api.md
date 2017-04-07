@@ -173,6 +173,14 @@ If `promise` resolves successfully, returns `undefined`.
 
 -   `promise`  
 
+**Examples**
+
+```javascript
+const err = await a.rejection(shouldFail())
+```
+
+Returns **[promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)&lt;[Error](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error)>** the Error object, or undefined
+
 ## resolution
 
 Waits for the value of `promise`.
@@ -181,6 +189,14 @@ If `promise` throws an Error, returns `undefined`.
 **Parameters**
 
 -   `promise`  
+
+**Examples**
+
+```javascript
+const result = await a.resolution(optionalStep())
+```
+
+Returns **[promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)** the result, or undefined
 
 ## result
 
