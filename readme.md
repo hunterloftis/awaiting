@@ -2,9 +2,19 @@
 
 The async/await utility for browsers and Node.js.
 
+- Node.js >= 0.7.6
+- Edge >= 15
+- Firefox >= 52
+- Chrome >= 55
+- Safari >= 10.1
+- Opera >= 44
+- iOS Safari >= 10.3
+
 [![Build Status](https://travis-ci.org/hunterloftis/awaiting.svg?branch=master)](https://travis-ci.org/hunterloftis/awaiting)
 
 [Documentation](https://hunterloftis.github.io/awaiting/)
+
+
 
 ## Examples
 
