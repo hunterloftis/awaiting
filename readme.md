@@ -4,7 +4,7 @@ The async/await utility for browsers and Node.js.
 
 [![Build Status](https://travis-ci.org/hunterloftis/awaiting.svg?branch=master)](https://travis-ci.org/hunterloftis/awaiting)
 
-[Docs](api.md)
+[Documentation](https://hunterloftis.github.io/awaiting/)
 
 ## Examples
 
@@ -28,7 +28,7 @@ const pages = await a.map(urls, 3, async url => await fetch(url))
 const optionalFeature = await a.resolution(optionalStep)
 ```
 
-...and more in [the docs](api.md).
+...and more in [the docs](https://hunterloftis.github.io/awaiting/).
 
 ## Installation
 
