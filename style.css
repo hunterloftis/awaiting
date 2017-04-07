@@ -1,0 +1,29 @@
+body {
+  width: 1024px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: Helvetica, sans-serif;
+  color: rgb(102, 102, 102)
+}
+
+h1, h2, h3, h4 {
+  font-weight: normal;
+  color: #000;
+}
+
+pre, ul, li {
+  text-align: left;
+}
+
+pre {
+  font-family: SFMono-Regular, Consolas, "Liberation Mono", Menlo, Courier, monospace;
+  color: #24292e;
+  font-size: 11pt;
+  background: #f6f8fa;
+  padding: 20px;
+}
+
+a {
+  color: #1184CE;
+  text-decoration: none;
+}
