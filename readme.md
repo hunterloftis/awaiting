@@ -2,7 +2,7 @@
 
 The async/await utility for browsers and Node.js.
 
-[API Docs](https://hunterloftis.github.io/awaiting/api.html) | [Examples](#examples) | [Installation](#installation)
+[API Docs](https://hunterloftis.github.io/awaiting/api.html) | [Examples](#examples) | [Installation](#installation) | [GitHub](https://github.com/hunterloftis/awaiting)
 
 - Node.js >= 0.7.6
 - Edge >= 15
