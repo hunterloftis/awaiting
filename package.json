@@ -14,11 +14,11 @@
     "browserify:lib": "browserify lib/awaiting.js --standalone awaiting -o browser/awaiting.js",
     "browserify:tests": "browserify test/*.test.js -o test/browser/test.js",
     "browserify": "yarn browserify:lib && yarn browserify:tests",
-    "build": "yarn install && yarn lint && yarn secure && yarn test && yarn browserify && yarn docs",
     "safe": "git diff-index --quiet master --",
+    "release:docs": "yarn safe && git subtree push --prefix docs origin gh-pages",
 
-    "release": "yarn safe && yarn build && yarn version && npm publish --registry 'https://registry.npmjs.org/'",
-    "release:docs": "yarn safe && yarn build && git subtree push --prefix docs origin gh-pages"
+    "build": "yarn install && yarn lint && yarn secure && yarn test && yarn browserify && yarn docs",
+    "release": "yarn safe && yarn version && npm publish --registry 'https://registry.npmjs.org/' && yarn release:docs"
   },
   "main": "lib/awaiting.js",
   "license": "MIT",
