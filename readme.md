@@ -2,7 +2,7 @@
 
 The async/await utility for browsers and Node.js.
 
-[Documentation](https://hunterloftis.github.io/awaiting/) |
+[API Docs](https://hunterloftis.github.io/awaiting/) |
 [Examples](#examples) |
 [Installation](#installation)
 
