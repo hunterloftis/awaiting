@@ -251,8 +251,14 @@ Silently swallows unhandled rejections.
 **Examples**
 
 ```javascript
-// suppress useless console warnings when rejections happen
+failingPromise()
+// => (node:6051) UnhandledPromiseRejectionWarning: Unhandled promise rejection (rejection id: 1): Error: fail
+```
+
+```javascript
 a.swallow()
+failingPromise()
+// (no output)
 ```
 
 Returns **[undefined](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined)** 
