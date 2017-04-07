@@ -1,6 +1,6 @@
 {
   "name": "awaiting",
-  "version": "1.1.6",
+  "version": "1.1.7",
   "engines": {
     "node": ">=7.6.x"
   },
@@ -16,7 +16,6 @@
     "browserify": "yarn browserify:lib && yarn browserify:tests",
     "safe": "git diff-index --quiet master --",
     "release:docs": "yarn safe && git subtree push --prefix docs origin gh-pages",
-
     "build": "yarn install && yarn lint && yarn secure && yarn test && yarn browserify && yarn docs",
     "release": "yarn safe && yarn version && npm publish --registry 'https://registry.npmjs.org/' && yarn release:docs"
   },
