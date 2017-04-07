@@ -4,6 +4,8 @@
   "engines": {
     "node": ">=7.6.x"
   },
+  "repository": "hunterloftis/awaiting",
+  "bugs": "https://github.com/hunterloftis/awaiting/issues",
   "scripts": {
     "lint": "standard --fix 'lib/**/*.js'",
     "secure": "nsp check",
