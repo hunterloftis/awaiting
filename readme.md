@@ -59,9 +59,16 @@ Use [https://raw.githubusercontent.com/hunterloftis/awaiting/master/browser/awai
 </script>
 ```
 
+## Building
+
+```
+$ yarn build
+```
+
 ## Testing
 
 ```
+$ yarn install
 $ yarn test
 $ yarn test:browser
 ```

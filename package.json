@@ -13,7 +13,7 @@
     "browserify:lib": "browserify lib/awaiting.js --standalone awaiting -o browser/awaiting.js",
     "browserify:tests": "browserify test/*.test.js -o test/browser/test.js",
     "browserify": "yarn browserify:lib && yarn browserify:tests",
-    "build": "yarn lint && yarn secure && yarn test && yarn browserify && yarn doc"
+    "build": "yarn install && yarn lint && yarn secure && yarn test && yarn browserify && yarn doc"
   },
   "main": "lib/awaiting.js",
   "license": "MIT",
