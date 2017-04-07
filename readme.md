@@ -38,6 +38,37 @@ const optionalFeature = await a.resolution(optionalStep)
 
 ...and more in [the API Docs](https://hunterloftis.github.io/awaiting/api.html).
 
+## Motivation
+
+**I love the async/await pattern.**
+Code written with async functions benefits from superior readability,
+improved terseness and expressiveness, and unified error handling.
+No more nested callbacks, opaque Promise chains, and `if (err)` checks littering your code.
+
+**However, this pattern isn't a panacea.**
+It's easy to do some things:
+iterate through single items, wait on a single result, run an array of promises in parallel.
+Other workflows require abstraction or state.
+I kept finding myself writing the same utility functions in each project:
+delays, throttled maps, skipping try/catch on optional operations, adapting to events or callbacks.
+Await, combined with simple abstractions, yields readable yet powerful async workflows.
+
+**Why now?**
+Node v7.6.0 enabled non-transpiled, non-flagged, out-of-the-box support for async functions.
+Every major browser has shipped support.
+If you write for old clients, you can still use this via Babel.
+Async functions are already here.
+
+**Why not something like Bluebird?**
+Check your `node_modules` directories - how many different Promise libs do your projects have
+in addition to the to-spec one that ships with node?
+3rd party Promises means that you now have to check the capabilities of a given Promise before using them.
+What's the word for that? Fragmentation.
+We've been here before, back when extending Object prototypes was trendy; let's not regress.
+Instead, we should follow the example of lodash/underscore.
+JavaScript needed better Array and Object functions -
+not a 3rd party lib that replaces Array or Object with custom versions, or extends their prototypes with methods.
+
 ## Installation
 
 ### In node
