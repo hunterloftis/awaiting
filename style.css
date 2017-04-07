@@ -1,7 +1,12 @@
+html {
+  background: #f5f5f5;
+}
+
 body {
-  width: 1024px;
-  margin: 0 auto;
-  padding: 20px;
+  background: #fff;
+  width: 1000px;
+  margin: 10px auto;
+  padding: 17px;
   font-family: Helvetica, sans-serif;
   color: rgb(102, 102, 102)
 }
@@ -11,15 +16,19 @@ h1, h2, h3, h4 {
   color: #000;
 }
 
+h2 {
+  margin-top: 50px;
+}
+
 pre, ul, li {
   text-align: left;
 }
 
 pre {
-  font-family: SFMono-Regular, Consolas, "Liberation Mono", Menlo, Courier, monospace;
+  font-family: Source Code Pro,Menlo,Consolas,Liberation Mono,monospace;
   color: #24292e;
   font-size: 11pt;
-  background: #f6f8fa;
+  background: #F9F9F9;
   padding: 20px;
 }
 
