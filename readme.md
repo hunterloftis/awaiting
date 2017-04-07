@@ -103,7 +103,7 @@ What's the word for that? Fragmentation.
 We've been here before, back when extending Object prototypes was cool; let's not regress.
 Instead, we should follow the example of lodash/underscore:
 JavaScript needed better Array and Object functions -
-not a 3rd party lib that replaced Array or Object with custom versions, or extended their prototypes with methods.
+not a 3rd party lib that replaced Array or Object with custom versions, or extended their prototypes with non-spec behavior.
 
 Node's ['unhandledRejection' event](https://nodejs.org/api/process.html#process_event_unhandledrejection)
 illustrates these interoperability issues:
