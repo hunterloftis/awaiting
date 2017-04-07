@@ -18,7 +18,7 @@
     "safe": "git diff-index --quiet master --",
 
     "release": "yarn safe && yarn build && yarn version && npm publish --registry 'https://registry.npmjs.org/'",
-    "release:docs": "git subtree push --prefix docs origin gh-pages"
+    "release:docs": "yarn safe && yarn build && git subtree push --prefix docs origin gh-pages"
   },
   "main": "lib/awaiting.js",
   "license": "MIT",
