@@ -11,7 +11,7 @@ The async/await utility for browsers and Node.js.
 await a.delay(1000)
 
 // limit a fetch to five seconds
-const image = await a.limit(fetch('flowers.jpg', 5000)
+const image = await a.limit(fetch('flowers.jpg'), 5000)
 
 // await events
 await a.event(server, 'listen')
