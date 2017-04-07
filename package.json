@@ -7,13 +7,18 @@
   "scripts": {
     "lint": "standard --fix 'lib/**/*.js'",
     "secure": "nsp check",
-    "test": "mocha --bail test/*.test.js",
+    "test": "mocha --bail test/*.test.js test/node/*.test.js",
+    "test:browser": "yarn browserify:tests && open test/browser/index.html",
     "doc": "documentation build lib/awaiting.js -f md -o api.md",
-    "build": "yarn lint && yarn secure && yarn test && yarn doc"
+    "browserify:lib": "browserify lib/awaiting.js --standalone awaiting -o browser/awaiting.js",
+    "browserify:tests": "browserify test/*.test.js -o test/browser/test.js",
+    "browserify": "yarn browserify:lib && yarn browserify:tests",
+    "build": "yarn lint && yarn secure && yarn test && yarn browserify && yarn doc"
   },
   "main": "lib/awaiting.js",
   "license": "MIT",
   "devDependencies": {
+    "browserify": "^14.3.0",
     "chai": "^3.5.0",
     "documentation": "^4.0.0-beta.18",
     "mocha": "^3.2.0",

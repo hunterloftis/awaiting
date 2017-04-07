@@ -28,7 +28,7 @@ Waits for `ms` milliseconds to pass.
 
 ```javascript
 const start = Date.now()
-await delay(5000)
+await a.delay(5000)
 console.log(Date.now() - start)
 // => 5000
 ```
@@ -47,7 +47,7 @@ Waits for `date`.
 
 ```javascript
 const nextYear = new Date(2018, 1)
-await time(nextYear)
+await a.time(nextYear)
 // => this will run until the end of 2017
 ```
 
@@ -68,7 +68,7 @@ If `limiter` is a number, limits by time in milliseconds
 
 ```javascript
 // throw if flowers.jpg can't be retrieved in < 5 seconds
-await limit(fetch('flowers.jpg'), 5000)
+await a.limit(fetch('flowers.jpg'), 5000)
 ```
 
 Returns **[promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)** 

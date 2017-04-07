@@ -19,8 +19,8 @@ describe('callback', () => {
 
 function read(file, callback) {
   if (file !== 'foo.txt') {
-    setImmediate(() => callback(new Error('file not found')))
+    setTimeout(() => callback(new Error('file not found')), 0)
     return
   }
-  setImmediate(() => callback(null, 'contents'))
+  setTimeout(() => callback(null, 'contents'), 0)
 }

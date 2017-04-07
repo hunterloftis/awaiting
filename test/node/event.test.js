@@ -1,4 +1,4 @@
-const a = require('..')
+const a = require('../..')
 const assert = require('chai').assert
 const EventEmitter = require('events').EventEmitter
 

@@ -21,14 +21,11 @@ await a.event(server, 'listen')
 // await callbacks
 const contents = await a.callback(fs.readFile, 'foo.txt')
 
-// map an array to an async function with a concurrency of 3
+// map an array to an async function with 3 instances running in parallel
 const pages = await a.map(urls, 3, async url => await fetch(url))
 
 // await successes (ignoring errors)
-const success = await a.resolution(optionalStep)
-
-// await errors (ignoring successes)
-const err = await a.rejection(shouldFail)
+const optionalFeature = await a.resolution(optionalStep)
 ```
 
 ...and more in [the docs](api.md).
@@ -37,27 +34,27 @@ const err = await a.rejection(shouldFail)
 
 ### Browser
 
+Use [browser/awaiting.js](browser/awaiting.js):
+
 ```html
 <script src='awaiting.js'></script>
 <script>
-  const a = awaiting()
+  const a = awaiting
   await a.delay(1000)
 </script>
 ```
 
 ### Node.js
 
+Use yarn or npm:
+
 ```
 $ yarn add awaiting
-```
 
-*or*
-
-```
 $ npm install --save awaiting
 ```
 
-*then*
+*then:*
 
 ```js
 const a = require('awaiting')
@@ -68,4 +65,5 @@ await a.delay(1000)
 
 ```
 $ yarn test
+$ yarn test:browser
 ```
