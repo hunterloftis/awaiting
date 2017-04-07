@@ -2,8 +2,6 @@
 
 The async/await utility for browsers and Node.js.
 
-**Just getting this set up / published / documented now. Should be usable in about 24 hours.**
-
 [Docs](api.md)
 
 ## Examples
@@ -32,19 +30,7 @@ const optionalFeature = await a.resolution(optionalStep)
 
 ## Installation
 
-### Browser
-
-Use [browser/awaiting.js](browser/awaiting.js):
-
-```html
-<script src='awaiting.js'></script>
-<script>
-  const a = awaiting
-  await a.delay(1000)
-</script>
-```
-
-### Node.js
+### In node
 
 Use yarn or npm:
 
@@ -59,6 +45,18 @@ $ npm install --save awaiting
 ```js
 const a = require('awaiting')
 await a.delay(1000)
+```
+
+### In a browser
+
+Use [browser/awaiting.js](browser/awaiting.js):
+
+```html
+<script src='awaiting.js'></script>
+<script>
+  const a = awaiting
+  await a.delay(1000)
+</script>
 ```
 
 ## Testing
