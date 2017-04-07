@@ -46,7 +46,8 @@ Use yarn or npm:
 
 ```
 $ yarn add awaiting
-
+```
+```
 $ npm install --save awaiting
 ```
 
