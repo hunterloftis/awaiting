@@ -3,3 +3,4 @@ node_js:
   - "7.6.0"
   - "node"
 script: yarn test
+after_success: yarn coverage
