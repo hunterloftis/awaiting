@@ -2,7 +2,8 @@
 
 The async/await utility for browsers and Node.js.
 
-![Build Status](https://travis-ci.org/hunterloftis/awaiting.svg?branch=master)(https://travis-ci.org/hunterloftis/awaiting)
+[![Build Status](https://travis-ci.org/hunterloftis/awaiting.svg?branch=master)](https://travis-ci.org/hunterloftis/awaiting)
+
 [Docs](api.md)
 
 ## Examples
