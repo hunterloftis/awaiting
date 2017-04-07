@@ -62,12 +62,12 @@ Async functions are already here.
 **Why not something like Bluebird?**
 Check your `node_modules` directories - how many different Promise libs do your projects have
 in addition to the to-spec one that ships with node?
-3rd party Promises means that you now have to check the capabilities of a given Promise before using them.
+3rd party Promises mean that you now have to check the capabilities of a given Promise before using it.
 What's the word for that? Fragmentation.
-We've been here before, back when extending Object prototypes was trendy; let's not regress.
-Instead, we should follow the example of lodash/underscore.
+We've been here before, back when extending Object prototypes was cool; let's not regress.
+Instead, we should follow the example of lodash/underscore:
 JavaScript needed better Array and Object functions -
-not a 3rd party lib that replaces Array or Object with custom versions, or extends their prototypes with methods.
+not a 3rd party lib that replaced Array or Object with custom versions, or extended their prototypes with methods.
 
 ## Installation
 
