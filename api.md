@@ -13,8 +13,8 @@
 -   [rejection](#rejection)
 -   [resolution](#resolution)
 -   [completion](#completion)
--   [throwRejections](#throwrejections)
--   [swallowRejections](#swallowrejections)
+-   [throw](#throw)
+-   [swallow](#swallow)
 
 ## delay
 
@@ -218,7 +218,11 @@ await a.completion(mightWork())
 
 Returns **[promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)** the result or error
 
-## throwRejections
+## throw
+
+Handles 'unhandledRejection' events.
+Provides a stack trace of Error objects in addition to the default message string.
+{throw} and {swallow} can be called multiple times but will only attach a single listener.
 
 **Examples**
 
@@ -229,7 +233,11 @@ a.throw()
 
 Returns **[undefined](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined)** 
 
-## swallowRejections
+## swallow
+
+Handles 'unhandledRejection' events.
+Silently swallows unhandled rejections.
+{throw} and {swallow} can be called multiple times but will only attach a single listener.
 
 **Examples**
 
