@@ -9,7 +9,7 @@
   "scripts": {
     "lint": "standard --fix 'lib/**/*.js'",
     "secure": "nsp check",
-    "test": "nyc --check-coverage --lines 90 --functions 90 --branches 90 mocha --bail test/*.test.js test/node/*.test.js",
+    "test": "nyc --check-coverage --lines 100 --functions 100 --branches 100 mocha --bail test/*.test.js test/node/*.test.js",
     "test:browser": "yarn browserify:tests && open test/browser/index.html",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
     "browserify:lib": "browserify lib/awaiting.js --standalone awaiting -o browser/awaiting.js",
