@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta charset='utf-8' />
-  <title>  | Documentation</title>
+  <title>awaiting 1.1.5 | Documentation</title>
   <meta name='viewport' content='width=device-width,initial-scale=1'>
   <link href='assets/bass.css' type='text/css' rel='stylesheet' />
   <link href='assets/style.css' type='text/css' rel='stylesheet' />
@@ -13,8 +13,8 @@
     <div class='clearfix md-mxn2'>
       <div class='fixed xs-hide fix-3 overflow-auto max-height-100'>
         <div class='py1 px2'>
-          <h3 class='mb0 no-anchor'></h3>
-          <div class='mb1'><code></code></div>
+          <h3 class='mb0 no-anchor'>awaiting</h3>
+          <div class='mb1'><code>1.1.5</code></div>
           <input
             placeholder='Filter'
             id='filter-input'
@@ -25,29 +25,29 @@
               
                 
                 <li><a
+                  href='#callback'
+                  class="">
+                  callback
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#completion'
+                  class="">
+                  completion
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
                   href='#delay'
                   class="">
                   delay
-                  
-                </a>
-                
-                </li>
-              
-                
-                <li><a
-                  href='#time'
-                  class="">
-                  time
-                  
-                </a>
-                
-                </li>
-              
-                
-                <li><a
-                  href='#limit'
-                  class="">
-                  limit
                   
                 </a>
                 
@@ -65,9 +65,9 @@
               
                 
                 <li><a
-                  href='#callback'
+                  href='#group'
                   class="">
-                  callback
+                  group
                   
                 </a>
                 
@@ -75,9 +75,9 @@
               
                 
                 <li><a
-                  href='#group'
+                  href='#limit'
                   class="">
-                  group
+                  limit
                   
                 </a>
                 
@@ -125,9 +125,9 @@
               
                 
                 <li><a
-                  href='#completion'
+                  href='#swallow'
                   class="">
-                  completion
+                  swallow
                   
                 </a>
                 
@@ -145,9 +145,9 @@
               
                 
                 <li><a
-                  href='#swallow'
+                  href='#time'
                   class="">
-                  swallow
+                  time
                   
                 </a>
                 
@@ -168,334 +168,14 @@
   
   <div class='clearfix'>
     
-    <h3 class='fl m0' id='delay'>
-      delay
-    </h3>
-    
-    
-  </div>
-  
-
-  <p>Waits for <code>ms</code> milliseconds to pass.</p>
-
-
-  <div class='pre p1 fill-light mt0'>delay(ms: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">promise</a></div>
-  
-  
-
-  
-  
-  
-  
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Parameters</div>
-    <div class='prose'>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>ms</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>)</code>
-	    the number of milliseconds to wait
-
-          </div>
-          
-        </div>
-      
-    </div>
-  
-
-  
-
-  
-    
-      <div class='py1 quiet mt1 prose-big'>Returns</div>
-      <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">promise</a></code>:
-        
-
-      
-    
-  
-
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Example</div>
-    
-      
-      <pre class='p1 overflow-auto round fill-light'><span class="hljs-keyword">const</span> start = <span class="hljs-built_in">Date</span>.now()
-<span class="hljs-keyword">await</span> a.delay(<span class="hljs-number">5000</span>)
-<span class="hljs-built_in">console</span>.log(<span class="hljs-built_in">Date</span>.now() - start)
-<span class="hljs-comment">// =&gt; 5000</span></pre>
-    
-  
-
-  
-
-  
-
-  
-</section>
-
-          
-        
-          
-            <section class='p2 mb2 clearfix bg-white minishadow'>
-
-  
-  <div class='clearfix'>
-    
-    <h3 class='fl m0' id='time'>
-      time
-    </h3>
-    
-    
-  </div>
-  
-
-  <p>Waits for <code>date</code>.</p>
-
-
-  <div class='pre p1 fill-light mt0'>time(date: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date">date</a>): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">promise</a></div>
-  
-  
-
-  
-  
-  
-  
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Parameters</div>
-    <div class='prose'>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>date</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date">date</a>)</code>
-	    the date at which to stop waiting
-
-          </div>
-          
-        </div>
-      
-    </div>
-  
-
-  
-
-  
-    
-      <div class='py1 quiet mt1 prose-big'>Returns</div>
-      <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">promise</a></code>:
-        
-
-      
-    
-  
-
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Example</div>
-    
-      
-      <pre class='p1 overflow-auto round fill-light'><span class="hljs-keyword">const</span> nextYear = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Date</span>(<span class="hljs-number">2018</span>, <span class="hljs-number">1</span>)
-<span class="hljs-keyword">await</span> a.time(nextYear)
-<span class="hljs-comment">// =&gt; this will run until the end of 2017</span></pre>
-    
-  
-
-  
-
-  
-
-  
-</section>
-
-          
-        
-          
-            <section class='p2 mb2 clearfix bg-white minishadow'>
-
-  
-  <div class='clearfix'>
-    
-    <h3 class='fl m0' id='limit'>
-      limit
-    </h3>
-    
-    
-  </div>
-  
-
-  <p>Waits for the value of <code>goal</code>, limited by the resolution of <code>limiter</code>.
-Throws an Error if <code>limiter</code> finishes first or if either throws early.
-If <code>limiter</code> is a number, limits by time in milliseconds</p>
-
-
-  <div class='pre p1 fill-light mt0'>limit(goal: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">promise</a>, limiter: (<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">promise</a>)): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">promise</a></div>
-  
-  
-
-  
-  
-  
-  
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Parameters</div>
-    <div class='prose'>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>goal</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">promise</a>)</code>
-	    the promise to execute
-
-          </div>
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>limiter</span> <code class='quiet'>((<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">promise</a>))</code>
-	    milliseconds or promise to limit by
-
-          </div>
-          
-        </div>
-      
-    </div>
-  
-
-  
-
-  
-    
-      <div class='py1 quiet mt1 prose-big'>Returns</div>
-      <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">promise</a></code>:
-        
-
-      
-    
-  
-
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Example</div>
-    
-      
-      <pre class='p1 overflow-auto round fill-light'><span class="hljs-comment">// throw if flowers.jpg can't be retrieved in &lt; 5 seconds</span>
-<span class="hljs-keyword">await</span> a.limit(fetch(<span class="hljs-string">'flowers.jpg'</span>), <span class="hljs-number">5000</span>)</pre>
-    
-  
-
-  
-
-  
-
-  
-</section>
-
-          
-        
-          
-            <section class='p2 mb2 clearfix bg-white minishadow'>
-
-  
-  <div class='clearfix'>
-    
-    <h3 class='fl m0' id='event'>
-      event
-    </h3>
-    
-    
-  </div>
-  
-
-  <p>Waits for <code>emitter</code> to emit an <code>eventName</code> event.</p>
-
-
-  <div class='pre p1 fill-light mt0'>event(emitter: EventEmitter, eventName: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">promise</a>&#x3C;<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>></div>
-  
-  
-
-  
-  
-  
-  
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Parameters</div>
-    <div class='prose'>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>emitter</span> <code class='quiet'>(EventEmitter)</code>
-	    the object to listen on
-
-          </div>
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>eventName</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</code>
-	    the event to listen for
-
-          </div>
-          
-        </div>
-      
-    </div>
-  
-
-  
-
-  
-    
-      <div class='py1 quiet mt1 prose-big'>Returns</div>
-      <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">promise</a>&#x3C;<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>></code>:
-        an array of the arguments passed to the 
-<code>eventName</code>
- event
-
-      
-    
-  
-
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Example</div>
-    
-      
-      <pre class='p1 overflow-auto round fill-light'><span class="hljs-keyword">await</span> a.event(server, <span class="hljs-string">'listen'</span>)</pre>
-    
-  
-
-  
-
-  
-
-  
-</section>
-
-          
-        
-          
-            <section class='p2 mb2 clearfix bg-white minishadow'>
-
-  
-  <div class='clearfix'>
-    
     <h3 class='fl m0' id='callback'>
       callback
     </h3>
     
+    
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/hunterloftis/awaiting/blob/c65e235893a9745af62ec2aa7424ed0ed930d2d5/lib/awaiting.js#L127-L134'>
+      <span>lib/awaiting.js</span>
+      </a>
     
   </div>
   
@@ -579,10 +259,262 @@ Waits for the callback result, throwing an Error if err is truthy.</p>
   
   <div class='clearfix'>
     
+    <h3 class='fl m0' id='completion'>
+      completion
+    </h3>
+    
+    
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/hunterloftis/awaiting/blob/c65e235893a9745af62ec2aa7424ed0ed930d2d5/lib/awaiting.js#L270-L274'>
+      <span>lib/awaiting.js</span>
+      </a>
+    
+  </div>
+  
+
+  <p>Waits for <code>promise</code> to resolve or reject.
+Returns either the resolved value, or the Error object.</p>
+
+
+  <div class='pre p1 fill-light mt0'>completion(promise: any): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">promise</a></div>
+  
+  
+
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>promise</span> <code class='quiet'>(any)</code>
+	    
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">promise</a></code>:
+        the result or error
+
+      
+    
+  
+
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Example</div>
+    
+      
+      <pre class='p1 overflow-auto round fill-light'><span class="hljs-keyword">await</span> a.completion(mightWork())</pre>
+    
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='delay'>
+      delay
+    </h3>
+    
+    
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/hunterloftis/awaiting/blob/c65e235893a9745af62ec2aa7424ed0ed930d2d5/lib/awaiting.js#L29-L33'>
+      <span>lib/awaiting.js</span>
+      </a>
+    
+  </div>
+  
+
+  <p>Waits for <code>ms</code> milliseconds to pass.</p>
+
+
+  <div class='pre p1 fill-light mt0'>delay(ms: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">promise</a></div>
+  
+  
+
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>ms</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>)</code>
+	    the number of milliseconds to wait
+
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">promise</a></code>:
+        
+
+      
+    
+  
+
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Example</div>
+    
+      
+      <pre class='p1 overflow-auto round fill-light'><span class="hljs-keyword">const</span> start = <span class="hljs-built_in">Date</span>.now()
+<span class="hljs-keyword">await</span> a.delay(<span class="hljs-number">5000</span>)
+<span class="hljs-built_in">console</span>.log(<span class="hljs-built_in">Date</span>.now() - start)
+<span class="hljs-comment">// =&gt; 5000</span></pre>
+    
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='event'>
+      event
+    </h3>
+    
+    
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/hunterloftis/awaiting/blob/c65e235893a9745af62ec2aa7424ed0ed930d2d5/lib/awaiting.js#L106-L112'>
+      <span>lib/awaiting.js</span>
+      </a>
+    
+  </div>
+  
+
+  <p>Waits for <code>emitter</code> to emit an <code>eventName</code> event.</p>
+
+
+  <div class='pre p1 fill-light mt0'>event(emitter: EventEmitter, eventName: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">promise</a>&#x3C;<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>></div>
+  
+  
+
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>emitter</span> <code class='quiet'>(EventEmitter)</code>
+	    the object to listen on
+
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>eventName</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</code>
+	    the event to listen for
+
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">promise</a>&#x3C;<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>></code>:
+        an array of the arguments passed to the 
+<code>eventName</code>
+ event
+
+      
+    
+  
+
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Example</div>
+    
+      
+      <pre class='p1 overflow-auto round fill-light'><span class="hljs-keyword">await</span> a.event(server, <span class="hljs-string">'listen'</span>)</pre>
+    
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
     <h3 class='fl m0' id='group'>
       group
     </h3>
     
+    
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/hunterloftis/awaiting/blob/c65e235893a9745af62ec2aa7424ed0ed930d2d5/lib/awaiting.js#L148-L150'>
+      <span>lib/awaiting.js</span>
+      </a>
     
   </div>
   
@@ -656,10 +588,104 @@ Throws an Error if anything in <code>list</code> rejects.</p>
   
   <div class='clearfix'>
     
+    <h3 class='fl m0' id='limit'>
+      limit
+    </h3>
+    
+    
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/hunterloftis/awaiting/blob/c65e235893a9745af62ec2aa7424ed0ed930d2d5/lib/awaiting.js#L64-L94'>
+      <span>lib/awaiting.js</span>
+      </a>
+    
+  </div>
+  
+
+  <p>Waits for the value of <code>goal</code>, limited by the resolution of <code>limiter</code>.
+Throws an Error if <code>limiter</code> finishes first or if either throws early.
+If <code>limiter</code> is a number, limits by time in milliseconds</p>
+
+
+  <div class='pre p1 fill-light mt0'>limit(goal: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">promise</a>, limiter: (<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">promise</a>)): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">promise</a></div>
+  
+  
+
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>goal</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">promise</a>)</code>
+	    the promise to execute
+
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>limiter</span> <code class='quiet'>((<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">promise</a>))</code>
+	    milliseconds or promise to limit by
+
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">promise</a></code>:
+        
+
+      
+    
+  
+
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Example</div>
+    
+      
+      <pre class='p1 overflow-auto round fill-light'><span class="hljs-comment">// throw if flowers.jpg can't be retrieved in &lt; 5 seconds</span>
+<span class="hljs-keyword">await</span> a.limit(fetch(<span class="hljs-string">'flowers.jpg'</span>), <span class="hljs-number">5000</span>)</pre>
+    
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
     <h3 class='fl m0' id='map'>
       map
     </h3>
     
+    
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/hunterloftis/awaiting/blob/c65e235893a9745af62ec2aa7424ed0ed930d2d5/lib/awaiting.js#L165-L196'>
+      <span>lib/awaiting.js</span>
+      </a>
     
   </div>
   
@@ -748,6 +774,10 @@ Throws an Error if any promise rejects.</p>
     </h3>
     
     
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/hunterloftis/awaiting/blob/c65e235893a9745af62ec2aa7424ed0ed930d2d5/lib/awaiting.js#L208-L224'>
+      <span>lib/awaiting.js</span>
+      </a>
+    
   </div>
   
 
@@ -822,6 +852,10 @@ Throws an Error if anything in <code>list</code> rejects.</p>
       rejection
     </h3>
     
+    
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/hunterloftis/awaiting/blob/c65e235893a9745af62ec2aa7424ed0ed930d2d5/lib/awaiting.js#L237-L241'>
+      <span>lib/awaiting.js</span>
+      </a>
     
   </div>
   
@@ -898,6 +932,10 @@ If <code>promise</code> resolves successfully, returns <code>undefined</code>.</
     </h3>
     
     
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/hunterloftis/awaiting/blob/c65e235893a9745af62ec2aa7424ed0ed930d2d5/lib/awaiting.js#L254-L258'>
+      <span>lib/awaiting.js</span>
+      </a>
+    
   </div>
   
 
@@ -968,41 +1006,32 @@ If <code>promise</code> throws an Error, returns <code>undefined</code>.</p>
   
   <div class='clearfix'>
     
-    <h3 class='fl m0' id='completion'>
-      completion
+    <h3 class='fl m0' id='swallow'>
+      swallow
     </h3>
     
+    
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/hunterloftis/awaiting/blob/c65e235893a9745af62ec2aa7424ed0ed930d2d5/lib/awaiting.js#L319-L323'>
+      <span>lib/awaiting.js</span>
+      </a>
     
   </div>
   
 
-  <p>Waits for <code>promise</code> to resolve or reject.
-Returns either the resolved value, or the Error object.</p>
+  <p>Silently swallows unhandled rejections.
+<code>throw</code> and <code>swallow</code> can be called multiple times but will only attach a single listener.</p>
 
 
-  <div class='pre p1 fill-light mt0'>completion(promise: any): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">promise</a></div>
-  
-  
-
-  
-  
-  
+  <div class='pre p1 fill-light mt0'>swallow(): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined">undefined</a></div>
   
   
 
   
-    <div class='py1 quiet mt1 prose-big'>Parameters</div>
-    <div class='prose'>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>promise</span> <code class='quiet'>(any)</code>
-	    
-          </div>
-          
-        </div>
-      
-    </div>
+  
+  
+  
+  
+
   
 
   
@@ -1010,8 +1039,8 @@ Returns either the resolved value, or the Error object.</p>
   
     
       <div class='py1 quiet mt1 prose-big'>Returns</div>
-      <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">promise</a></code>:
-        the result or error
+      <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined">undefined</a></code>:
+        
 
       
     
@@ -1023,7 +1052,13 @@ Returns either the resolved value, or the Error object.</p>
     <div class='py1 quiet mt1 prose-big'>Example</div>
     
       
-      <pre class='p1 overflow-auto round fill-light'><span class="hljs-keyword">await</span> a.completion(mightWork())</pre>
+      <pre class='p1 overflow-auto round fill-light'>failingPromise()
+<span class="hljs-comment">// =&gt; (node:6051) UnhandledPromiseRejectionWarning: Unhandled promise rejection (rejection id: 1): Error: fail</span></pre>
+    
+      
+      <pre class='p1 overflow-auto round fill-light'>a.swallow()
+failingPromise()
+<span class="hljs-comment">// (no output)</span></pre>
     
   
 
@@ -1046,6 +1081,10 @@ Returns either the resolved value, or the Error object.</p>
       throw
     </h3>
     
+    
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/hunterloftis/awaiting/blob/c65e235893a9745af62ec2aa7424ed0ed930d2d5/lib/awaiting.js#L297-L301'>
+      <span>lib/awaiting.js</span>
+      </a>
     
   </div>
   
@@ -1114,28 +1153,45 @@ failingPromise()
   
   <div class='clearfix'>
     
-    <h3 class='fl m0' id='swallow'>
-      swallow
+    <h3 class='fl m0' id='time'>
+      time
     </h3>
     
+    
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/hunterloftis/awaiting/blob/c65e235893a9745af62ec2aa7424ed0ed930d2d5/lib/awaiting.js#L46-L49'>
+      <span>lib/awaiting.js</span>
+      </a>
     
   </div>
   
 
-  <p>Silently swallows unhandled rejections.
-<code>throw</code> and <code>swallow</code> can be called multiple times but will only attach a single listener.</p>
+  <p>Waits for <code>date</code>.</p>
 
 
-  <div class='pre p1 fill-light mt0'>swallow(): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined">undefined</a></div>
-  
-  
-
-  
-  
-  
+  <div class='pre p1 fill-light mt0'>time(date: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date">date</a>): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">promise</a></div>
   
   
 
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>date</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date">date</a>)</code>
+	    the date at which to stop waiting
+
+          </div>
+          
+        </div>
+      
+    </div>
   
 
   
@@ -1143,7 +1199,7 @@ failingPromise()
   
     
       <div class='py1 quiet mt1 prose-big'>Returns</div>
-      <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined">undefined</a></code>:
+      <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">promise</a></code>:
         
 
       
@@ -1156,13 +1212,9 @@ failingPromise()
     <div class='py1 quiet mt1 prose-big'>Example</div>
     
       
-      <pre class='p1 overflow-auto round fill-light'>failingPromise()
-<span class="hljs-comment">// =&gt; (node:6051) UnhandledPromiseRejectionWarning: Unhandled promise rejection (rejection id: 1): Error: fail</span></pre>
-    
-      
-      <pre class='p1 overflow-auto round fill-light'>a.swallow()
-failingPromise()
-<span class="hljs-comment">// (no output)</span></pre>
+      <pre class='p1 overflow-auto round fill-light'><span class="hljs-keyword">const</span> nextYear = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Date</span>(<span class="hljs-number">2018</span>, <span class="hljs-number">1</span>)
+<span class="hljs-keyword">await</span> a.time(nextYear)
+<span class="hljs-comment">// =&gt; this will run until the end of 2017</span></pre>
     
   
 

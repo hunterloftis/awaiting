@@ -9,7 +9,7 @@
     "secure": "nsp check",
     "test": "mocha --bail test/*.test.js test/node/*.test.js",
     "test:browser": "yarn browserify:tests && open test/browser/index.html",
-    "docs": "documentation build lib/awaiting.js -f html -o docs",
+    "docs": "documentation build -f html --sort-order alpha -g -o docs",
     "browserify:lib": "browserify lib/awaiting.js --standalone awaiting -o browser/awaiting.js",
     "browserify:tests": "browserify test/*.test.js -o test/browser/test.js",
     "browserify": "yarn browserify:lib && yarn browserify:tests",
