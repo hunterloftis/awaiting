@@ -2,7 +2,11 @@
 
 The async/await utility for browsers and Node.js.
 
-[API Docs](https://hunterloftis.github.io/awaiting) | [Examples](#examples) | [Installation](#installation) | [GitHub](https://github.com/hunterloftis/awaiting)
+[API Docs](https://hunterloftis.github.io/awaiting) |
+[Installation](#installation) |
+[Examples](#examples) |
+[Motivation](#motivation) |
+[GitHub](https://github.com/hunterloftis/awaiting)
 
 - Node.js >= 0.7.6
 - Edge >= 15
@@ -13,6 +17,38 @@ The async/await utility for browsers and Node.js.
 - iOS Safari >= 10.3
 
 [![Build Status](https://travis-ci.org/hunterloftis/awaiting.svg?branch=master)](https://travis-ci.org/hunterloftis/awaiting)
+
+## Installation
+
+### In node
+
+Use yarn or npm:
+
+```
+$ yarn add awaiting
+```
+```
+$ npm install --save awaiting
+```
+
+*then:*
+
+```js
+const a = require('awaiting')
+await a.delay(1000)
+```
+
+### In a browser
+
+Use [browser/awaiting.js](https://raw.githubusercontent.com/hunterloftis/awaiting/master/browser/awaiting.js):
+
+```html
+<script src='awaiting.js'></script>
+<script>
+  const a = awaiting
+  await a.delay(1000)
+</script>
+```
 
 ## Examples
 
@@ -68,38 +104,6 @@ We've been here before, back when extending Object prototypes was cool; let's no
 Instead, we should follow the example of lodash/underscore:
 JavaScript needed better Array and Object functions -
 not a 3rd party lib that replaced Array or Object with custom versions, or extended their prototypes with methods.
-
-## Installation
-
-### In node
-
-Use yarn or npm:
-
-```
-$ yarn add awaiting
-```
-```
-$ npm install --save awaiting
-```
-
-*then:*
-
-```js
-const a = require('awaiting')
-await a.delay(1000)
-```
-
-### In a browser
-
-Use [browser/awaiting.js](https://raw.githubusercontent.com/hunterloftis/awaiting/master/browser/awaiting.js):
-
-```html
-<script src='awaiting.js'></script>
-<script>
-  const a = awaiting
-  await a.delay(1000)
-</script>
-```
 
 ## Building
 
