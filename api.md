@@ -12,8 +12,9 @@
 -   [race](#race)
 -   [rejection](#rejection)
 -   [resolution](#resolution)
--   [result](#result)
--   [unhandled](#unhandled)
+-   [completion](#completion)
+-   [throwRejections](#throwrejections)
+-   [swallowRejections](#swallowrejections)
 
 ## delay
 
@@ -176,7 +177,8 @@ If `promise` resolves successfully, returns `undefined`.
 **Examples**
 
 ```javascript
-const err = await a.rejection(shouldFail())
+const err = await a.rejection(potentialProblem())
+if (err) await fix()
 ```
 
 Returns **[promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)&lt;[Error](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error)>** the Error object, or undefined
@@ -194,11 +196,12 @@ If `promise` throws an Error, returns `undefined`.
 
 ```javascript
 const result = await a.resolution(optionalStep())
+if (result) console.log('completed optional step')
 ```
 
 Returns **[promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)** the result, or undefined
 
-## result
+## completion
 
 Waits for `promise` to resolve or reject.
 Returns either the resolved value, or the Error object.
@@ -207,13 +210,32 @@ Returns either the resolved value, or the Error object.
 
 -   `promise`  
 
-## unhandled
+**Examples**
 
-Handles 'unhandledRejection' events.
-Provides a stack trace of Error objects in addition to the default message string.
-If `silent` is truthy, silently swallows unhandled Promise errors.
-Idempotent; can be called multiple times but will only attach a single listener.
+```javascript
+await a.completion(mightWork())
+```
 
-**Parameters**
+Returns **[promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)** the result or error
 
--   `silent`  
+## throwRejections
+
+**Examples**
+
+```javascript
+// get useful information when rejections happen
+a.throw()
+```
+
+Returns **[undefined](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined)** 
+
+## swallowRejections
+
+**Examples**
+
+```javascript
+// suppress useless console warnings when rejections happen
+a.swallow()
+```
+
+Returns **[undefined](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined)** 
