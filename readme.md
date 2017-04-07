@@ -99,10 +99,17 @@ Check your `node_modules` directories - how many different Promise libs do your 
 in addition to the to-spec one that ships with node?
 3rd party Promises mean that you now have to check the capabilities of a given Promise before using it.
 What's the word for that? Fragmentation.
+
 We've been here before, back when extending Object prototypes was cool; let's not regress.
 Instead, we should follow the example of lodash/underscore:
 JavaScript needed better Array and Object functions -
 not a 3rd party lib that replaced Array or Object with custom versions, or extended their prototypes with methods.
+
+Node's ['unhandledRejection' event](https://nodejs.org/api/process.html#process_event_unhandledrejection)
+illustrates these interoperability issues:
+if you're using non-standard Promises, they won't be catchable.
+If your app and dependencies use a *mix* of 3rd party and native Promises,
+*some* of the Promise rejections in your app will be caught while others are not.
 
 ## Building
 
