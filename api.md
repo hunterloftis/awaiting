@@ -220,9 +220,8 @@ Returns **[promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Refe
 
 ## throw
 
-Handles 'unhandledRejection' events.
-Provides a stack trace of Error objects in addition to the default message string.
-{throw} and {swallow} can be called multiple times but will only attach a single listener.
+Provides a stack trace for unhandled rejections instead of the default message string.
+`throw` and `swallow` can be called multiple times but will only attach a single listener.
 
 **Examples**
 
@@ -235,9 +234,8 @@ Returns **[undefined](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Re
 
 ## swallow
 
-Handles 'unhandledRejection' events.
 Silently swallows unhandled rejections.
-{throw} and {swallow} can be called multiple times but will only attach a single listener.
+`throw` and `swallow` can be called multiple times but will only attach a single listener.
 
 **Examples**
 
