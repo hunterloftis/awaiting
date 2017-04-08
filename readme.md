@@ -87,7 +87,7 @@ iterate through single items, wait on a single result, run an array of promises 
 Other workflows require abstraction or state.
 I kept finding myself writing the same utility functions in each project:
 delays, throttled maps, skipping try/catch on optional operations, adapting to events or callbacks.
-Await, combined with simple abstractions, yields readable yet powerful async workflows.
+Await, combined with these simple abstractions, yields readable yet powerful async workflows.
 
 **Why now?**
 Node v7.6.0 enabled non-transpiled, non-flagged, out-of-the-box support for async functions.
