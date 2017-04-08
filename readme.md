@@ -96,21 +96,33 @@ If you write for old clients, you can still use this via Babel.
 Async functions are already here.
 
 **Why not something like Bluebird?**
-Check your `node_modules` directories - how many different Promise libs do your projects have
-in addition to the to-spec one that ships with node?
-3rd party Promises mean that you now have to check the capabilities of a given Promise before using it.
-What's the word for that? Fragmentation.
+This is heavily inspired by libraries like
+[Bluebird](http://bluebirdjs.com/docs/getting-started.html)
+and [Async](https://github.com/caolan/async),
+which both aim to make non-trivial async workflows more readable.
 
-We've been here before, back when extending Object prototypes was cool; let's not regress.
-Instead, we should follow the example of lodash/underscore:
-JavaScript needed better Array and Object functions -
-not a 3rd party lib that replaced Array or Object with custom versions, or extended their prototypes with non-spec behavior.
+However, these problems shouldn't be solved by replacing native Promise implementations with custom versions,
+as Bluebird and Q attempt.
+Having multiple, conflicting definitions of Promise in a codebase means you now have to check
+the capabilities of a given Promise before using it.
+This decreases interoperability and increases fragmentation - and dependency bloat.
+It's not uncommon for a single app to depend on two or three subtly different Promise implementations.
+
+We've been here before, back when extending Object prototypes was the norm.
+We've seen how painful it is to have different libraries extending or replacing
+built-ins like Promise with conflicting implementations of custom behavior.
 
 Node's ['unhandledRejection' event](https://nodejs.org/api/process.html#process_event_unhandledrejection)
-illustrates these interoperability issues:
-if you're using non-standard Promises, they won't be catchable.
+illustrates why interoperability is so important:
+if you're using non-standard Promises, you can't catch that event.
 If your app and dependencies use a *mix* of 3rd party and native Promises,
 *some* of the Promise rejections in your app will be caught while others are not.
+If you've ever used a library that returned some sort of "Promise,"
+but you had to dive into the source to find out exactly which implementation and custom behavior it exposed,
+you've also experienced the pain of fragmentation.
+
+Instead, awaiting follows the example of lodash and underscore,
+which chose not to replace or extend native Arrays and Objects, but instead provided functional utilities for them.
 
 ## Building
 
