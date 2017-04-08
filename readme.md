@@ -121,7 +121,9 @@ If you've ever used a library that returned some sort of "Promise,"
 but you had to dive into the source to find out exactly which implementation and custom behavior it exposed,
 you've also experienced the pain of fragmentation.
 
-Instead, awaiting follows the example of lodash and underscore,
+Instead, awaiting follows the example of
+[lodash](https://lodash.com/) and
+[underscore](http://underscorejs.org/),
 which chose not to replace or extend native Arrays and Objects, but instead provided functional utilities for them.
 
 ## Building
