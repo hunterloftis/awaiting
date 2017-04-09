@@ -1,0 +1,30 @@
+<!doctype html>
+<html>
+<head>
+</head>
+<body>
+  <script src='awaiting.js'></script>
+  <script>
+    const a = awaiting
+
+    kittens()
+
+    async function kittens() {
+      const urls = [
+        'https://placekitten.com/300/400',
+        'https://placekitten.com/310/400',
+        'https://placekitten.com/320/400',
+        'https://placekitten.com/330/400',
+      ]
+      const responses = await a.map(urls, 2, fetch)
+      const blobs = await a.map(responses, Infinity, res => res.blob())
+      const images = blobs.map(blobToImage)
+      images.forEach(image => document.body.appendChild(image))
+    }
+
+    function blobToImage(blob) {
+      return Object.assign(new Image(), { src: URL.createObjectURL(blob) })
+    }
+  </script>
+</body>
+</html>
