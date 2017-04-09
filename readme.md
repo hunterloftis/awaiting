@@ -52,6 +52,10 @@ Use [browser/awaiting.js](https://raw.githubusercontent.com/hunterloftis/awaitin
 
 ## Examples
 
+Check out a
+[live example in your browser](https://hunterloftis.github.io/awaiting/examples/kittens.html),
+then [view the source](examples/kittens.html).
+
 ```js
 // wait for a second
 await a.delay(1000)
