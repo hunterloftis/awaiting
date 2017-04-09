@@ -8,7 +8,7 @@ describe('list', () => {
   })
   it('throws if one of the results throws', async () => {
     try {
-      const results = await a.list([ p('foo', 100), f(50), p('baz', 10)])
+      const results = await a.list([ f(120), p('foo', 100), f(50), p('baz', 10)])
       throw new Error('should fail')
     }
     catch (err) {
@@ -19,6 +19,10 @@ describe('list', () => {
   it("doesn't throw if failures < ignore", async () => {
     const results = await a.list([ p('foo', 100), f(50), p('baz', 10)], 1)
     assert.deepEqual(results, ['foo', undefined, 'baz'])
+  })
+  it('resolves if an error is the last promise to complete', async () => {
+    const results = await a.list([ f(100), p('bar', 50), p('baz', 10)], 1)
+    assert.deepEqual(results, [undefined, 'bar', 'baz'])
   })
 })
 

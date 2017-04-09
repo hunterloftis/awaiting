@@ -29,7 +29,7 @@ describe('set', () => {
   })
   it('throws if rejections > ignore', async () => {
     try {
-      const results = await a.set([ p('foo', 100), f(50), f(10) ], 1, 1)
+      const results = await a.set([ f(120), p('foo', 100), f(50), f(10) ], 1, 1)
       throw new Error('should fail')
     }
     catch (err) {

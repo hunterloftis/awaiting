@@ -138,4 +138,5 @@ $ yarn build
 $ yarn install
 $ yarn test
 $ yarn test:browser
+$ yarn coverage:report
 ```
