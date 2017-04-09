@@ -70,10 +70,10 @@ await a.event(server, 'listen')
 const contents = await a.callback(fs.readFile, 'foo.txt')
 
 // map an array to an async function with 3 instances running in parallel
-const pages = await a.map(urls, 3, async url => await fetch(url))
+const pages = await a.map(urls, 3, fetch)
 
 // await successes (ignoring errors)
-const optionalFeature = await a.resolution(optionalStep)
+const file = await a.success(getNetworkFile())
 ```
 
 ...and more in [the API Docs](https://hunterloftis.github.io/awaiting).
