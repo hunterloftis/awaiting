@@ -1,13 +1,13 @@
 const a = require('..')
 const assert = require('chai').assert
 
-describe('resolution', () => {
+describe('success', () => {
   it('returns a value on success', async () => {
-    const result = await a.resolution(succeed())
+    const result = await a.success(succeed())
     assert.equal(result, 'ok')
   })
   it('returns undefined on error', async () => {
-    const result = await a.resolution(fail())
+    const result = await a.success(fail())
     assert.isUndefined(result)
   })
 
