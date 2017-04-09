@@ -1,13 +1,13 @@
 const a = require('..')
 const assert = require('chai').assert
 
-describe('rejection', () => {
+describe('failure', () => {
   it('returns an Error object on error', async () => {
-    const err = await a.rejection(fail())
+    const err = await a.failure(fail())
     assert.equal(err.message, 'fail')
   })
   it('returns undefined on success', async () => {
-    const result = await a.rejection(succeed())
+    const result = await a.failure(succeed())
     assert.isUndefined(result)
   })
 

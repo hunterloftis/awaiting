@@ -9,14 +9,16 @@
   "scripts": {
     "lint": "standard --fix 'lib/**/*.js'",
     "secure": "nsp check",
-    "test": "nyc --check-coverage --lines 100 --functions 100 --branches 100 mocha --bail test/*.test.js test/node/*.test.js",
+    "test:spec": "nyc --check-coverage --lines 100 --functions 100 --branches 100 mocha --bail test/*.test.js test/node/*.test.js",
     "test:browser": "yarn browserify:tests && open test/browser/index.html",
+    "test": "yarn lint && yarn secure && yarn test:spec",
+    "coverage:report": "nyc --reporter html mocha --bail test/*.test.js test/node/*.test.js && open coverage/index.html",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
     "browserify:lib": "browserify lib/awaiting.js --standalone awaiting -o browser/awaiting.js",
     "browserify:tests": "browserify test/*.test.js -o test/browser/test.js",
     "browserify": "yarn browserify:lib && yarn browserify:tests",
     "safe": "git diff-index --quiet master --",
-    "build": "yarn install && yarn lint && yarn secure && yarn test && yarn browserify",
+    "build": "yarn install && yarn test && yarn browserify",
     "build:docs": "documentation build -f html --sort-order alpha -g -o docs",
     "release": "yarn safe && yarn version && npm publish --registry 'https://registry.npmjs.org/'",
     "release:docs": "yarn safe && git subtree push --prefix docs origin gh-pages"

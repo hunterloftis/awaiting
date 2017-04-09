@@ -3,27 +3,43 @@
 /**
  * The async/await utility for browsers and Node.js.
  *
+ * (
+ * [github](https://github.com/hunterloftis/awaiting) -
+ * [npm](https://www.npmjs.com/package/awaiting) -
+ * [suggestions / bug reports](https://github.com/hunterloftis/awaiting/issues) -
+ * [installation](https://github.com/hunterloftis/awaiting#installation) -
+ * [motivation](https://github.com/hunterloftis/awaiting#motivation)
+ * )
+ *
  * **`$ yarn add awaiting`**
  *
  * **`$ npm install awaiting --save`**
  *
  * **`<script src='awaiting.js'>`**
  *
- * (
- * [github](https://github.com/hunterloftis/awaiting) -
- * [npm](https://www.npmjs.com/package/awaiting) -
- * [issues](https://github.com/hunterloftis/awaiting/issues) -
- * [installation](https://github.com/hunterloftis/awaiting#installation) -
- * [motivation](https://github.com/hunterloftis/awaiting#motivation)
- * )
- *
  * [![Build Status](https://travis-ci.org/hunterloftis/awaiting.svg?branch=master)](https://travis-ci.org/hunterloftis/awaiting)
  * [![Coverage Status](https://coveralls.io/repos/hunterloftis/awaiting/badge.svg?branch=master)](https://coveralls.io/r/hunterloftis/awaiting?branch=master)
  *
+ * @license MIT
  * @file
  * @example
  *
  * const a = require('awaiting')
+ *
+ * // backup script
+ * while (true) {
+ *   try {
+ *     const urls = await fetch('http://example.com/images')                 // big array of urls
+ *     const images = await a.map(images, 3, fetch)                          // fetch 3 at a time
+ *     const latency = [ ping('backup1'), ping('backup2'), ping('backup3') ] // time all our servers
+ *     const closest = await a.single(latency)                               // choose the fastest
+ *     await a.map(images, 1, upload(closest))                               // backup 1 image at a time
+ *   }
+ *   catch (err) {
+ *     console.error(err.stack || err)
+ *   }
+ *   await a.delay(10 * 60 * 1000)                                         // restart in 10 minutes
+ * }
  */
 
 module.exports = {
@@ -32,14 +48,70 @@ module.exports = {
   limit,
   event,
   callback,
-  group,
+  single,
+  set,
+  list,
+  object,
   map,
-  race,
-  rejection,
-  resolution,
-  completion,
+  failure,
+  success,
+  result,
   throw: throwRejections,
-  swallow: swallowRejections
+  swallow: swallowRejections,
+  ErrorList
+}
+
+/**
+ * Iterable Error type
+ *
+ * Functions that operate on lists throw ErrorLists,
+ * making it possible to inspect all of the Errors that may have been thrown.
+ *
+ * @class
+ * @param {string} message top-level Error message
+ * @returns {iterable.<Error>}
+ * @example
+ *
+ * const err = new ErrorList('several errors')
+ * err.add(new Error('first'))
+ * err.add(new Error('second'))
+ * console.log(err.message, err.get(1).message)
+ * // => several errors second
+ *
+ * @example
+ *
+ * try {
+ *   await a.list([ failing1, failing2, failing3 ])
+ * }
+ * catch (errorList) {
+ *   for (let err of errorList) {
+ *     console.error(err.stack)
+ *   }
+ * }
+ */
+function ErrorList (message) {
+  this.name = 'ErrorList'
+  this.message = message
+  this.stack = (new Error()).stack
+  this.errors = []
+  Object.defineProperty(this, 'length', {
+    get: function () { return this.errors.length }
+  })
+}
+ErrorList.prototype = Object.create(Error.prototype)
+ErrorList.prototype.constructor = ErrorList
+ErrorList.prototype.add = function (err) {
+  this.errors.push(err)
+}
+ErrorList.prototype.get = function (index) {
+  return this.errors[index]
+}
+ErrorList.prototype[Symbol.iterator] = function* () {
+  let i = 0
+  while (i < this.errors.length) {
+    yield this.errors[i]
+    i++
+  }
 }
 
 /**
@@ -162,19 +234,128 @@ async function callback (fn, ...args) {
 }
 
 /**
- * Waits for all Promises in `list` to resolve.
- * Throws an Error if anything in `list` rejects.
+ * Waits for the first Promise in `list` to resolve.
  *
- * @param {array} list promises
- * @returns {array} promised results in order
+ * @param {array.<Promise>} list racing promises
+ * @param {number} [ignore=0] number of rejections to ignore
+ * @returns {promise}
  * @example
  *
- * const results = await a.group([ foo, bar, baz ])
+ * const file = await a.single([ fetch(remoteFile), read(localFile) ])
+ */
+async function single (list, ignore = 0) {
+  const results = await set(list, 1, ignore)
+  return results[0]
+}
+
+/**
+ * Waits for the first `count` Promises in `list` to resolve.
+ *
+ * @param {array.<Promise>} list racing promises
+ * @param {number} [count=list.length] number of promises to wait for
+ * @param {number} [ignore=0] number of rejections to ignore
+ * @returns {promise.<Array>}
+ * @example
+ *
+ * const [ first, second ] = await a.set([
+ *   ping('ns1.example.com'),
+ *   ping('ns2.example.com'),
+ *   ping('ns3.example.com'),
+ *   ping('ns4.example.com')
+ * ], 2)
+ * console.log(`fastest nameservers: ${first}, ${second}`)
+ */
+
+async function set (list, count = Infinity, ignore = 0) {
+  return new Promise((resolve, reject) => {
+    const goal = Math.min(list.length, count)
+    const limit = Math.min(list.length - goal, ignore)
+    const results = []
+    const failures = new ErrorList('too many failures')
+    list.forEach(promise => promise.then(success).catch(error))
+
+    function success (result) {
+      if (failures.length > limit) return
+      results.push(result)
+      if (results.length === goal) {
+        resolve(results)
+      }
+    }
+    function error (err) {
+      if (failures.length > limit) return
+      if (results.length >= goal) return
+      failures.add(err)
+      // TODO: reject with an Iterable custom Error that includes all failures
+      if (failures.length > limit) reject(failures)
+    }
+  })
+}
+
+/**
+ * Waits for all Promises in `list` to resolve.
+ *
+ * @param {array} list promises
+ * @param {number} ignore rejections to ignore
+ * @returns {promise.<Array>} promised results in order
+ * @example
+ *
+ * const results = await a.list([ foo, bar, baz ])
  * console.log(results.length)
  * // => 3
  */
-async function group (list) {
-  return Promise.all(list)
+async function list (list, ignore = 0) {
+  return new Promise((resolve, reject) => {
+    const results = []
+    const failures = new ErrorList('too many failures')
+    const complete = () => count + failures.length === list.length
+    let count = 0
+    list.forEach((promise, index) => {
+      promise.then(success).catch(error)
+
+      function success (result) {
+        if (failures.length > ignore) return
+        results[index] = result
+        count++
+        if (complete()) resolve(results)
+      }
+      function error (err) {
+        if (failures.length > ignore) return
+        results[index] = undefined
+        failures.add(err)
+        if (failures.length > ignore) reject(failures)
+        else if (complete()) resolve(results)
+      }
+    })
+  })
+}
+
+/**
+ * Waits for all Promises in the keys of `container` to resolve.
+ *
+ * @param {object} container
+ * @param {number} ignore rejections to ignore
+ * @returns {promise.<Object>} a new object with keys mapped to the resolved values
+ * @example
+ *
+ * const results = await a.object({
+ *   pictures: getPictures(),
+ *   comments: getComments(),
+ *   tweets: getTweets()
+ * })
+ * console.log(results.pictures, results.comments, results.tweets)
+ */
+
+async function object (container, ignore = 0) {
+  const containsPromise = key => typeof container[key].then === 'function'
+  const keys = Object.keys(container).filter(containsPromise)
+  const promises = keys.map(key => container[key])
+  const results = await list(promises, ignore)
+  const obj = Object.assign({}, container)
+  results.forEach((result, index) => {
+    const key = keys[index]
+    obj[key] = result
+  })
+  return obj
 }
 
 /**
@@ -224,34 +405,6 @@ async function map (list, concurrency, fn) {
 }
 
 /**
- * Waits for the first Promise in `list` to resolve.
- * Throws an Error if anything in `list` rejects.
- *
- * @param {array.<Promise>} list racing promises
- * @returns {promise}
- * @example
- *
- * const file = await a.race(fetch(remoteFile), read(localFile))
- */
-async function race (list) {
-  return new Promise((resolve, reject) => {
-    let winner = false
-    list.forEach(promise => promise.then(success).catch(error))
-
-    function success (result) {
-      if (winner) return
-      winner = true
-      resolve(result)
-    }
-    function error (err) {
-      if (winner) return
-      winner = true
-      reject(err)
-    }
-  })
-}
-
-/**
  * Waits for `promise` to reject, returning the Error object.
  * If `promise` resolves successfully, returns `undefined`.
  *
@@ -259,10 +412,10 @@ async function race (list) {
  * @returns {promise.<Error>} the Error object, or undefined
  * @example
  *
- * const err = await a.rejection(potentialProblem())
+ * const err = await a.failure(potentialProblem())
  * if (err) await fix()
  */
-async function rejection (promise) {
+async function failure (promise) {
   return new Promise((resolve, reject) => {
     promise.then(() => resolve(undefined)).catch(resolve)
   })
@@ -276,10 +429,12 @@ async function rejection (promise) {
  * @returns {promise} the result, or undefined
  * @example
  *
- * const result = await a.resolution(optionalStep())
- * if (result) console.log('completed optional step')
+ * do {
+ *   let file = await a.success(getNetworkFile())
+ *   if (!file) await a.delay(5000)
+ * } while (!file)
  */
-async function resolution (promise) {
+async function success (promise) {
   return new Promise((resolve, reject) => {
     promise.then(resolve).catch(err => resolve(undefined)) // eslint-disable-line
   })
@@ -293,16 +448,16 @@ async function resolution (promise) {
  * @returns {promise} the result or error
  * @example
  *
- * await a.completion(mightWork())
+ * await a.result(mightWork())
  */
-async function completion (promise) {
+async function result (promise) {
   return new Promise((resolve, reject) => {
     promise.then(resolve).catch(err => resolve(err))
   })
 }
 
 /**
- * Provides a stack trace for unhandled rejections instead of the default message string.
+ * Provides a stack tsingle for unhandled rejections instead of the default message string.
  * `throw` and `swallow` can be called multiple times but will only attach a single listener.
  * @alias throw
  * @returns {undefined}
@@ -8632,14 +8787,57 @@ function read(file, callback) {
 const a = require('..')
 const assert = require('chai').assert
 
-describe('completion', () => {
-  it('returns a value on success', async () => {
-    const result = await a.completion(succeed())
-    assert.equal(result, 'ok')
+describe('delay', () => {
+  it('delays by (ms) milliseconds', async () => {
+    const start = Date.now()
+    await a.delay(100)
+    assert.closeTo(Date.now() - start, 100, 10)
   })
-  it('returns the Error on error', async () => {
-    const result = await a.completion(fail())
-    assert.equal(result.message, 'fail')
+})
+
+},{"..":1,"chai":5}],45:[function(require,module,exports){
+const a = require('..')
+const assert = require('chai').assert
+
+describe('ErrorList', () => {
+  it('can be thrown', () => {
+    try {
+      throw new a.ErrorList('testing')
+      throw new Error('should not get here')
+    }
+    catch (err) {
+      assert.equal(err.message, 'testing')
+    }
+  })
+  it('can be added to', () => {
+    const err = new a.ErrorList('foo')
+    err.add(new Error('bar'))
+    assert.equal(err.get(0).message, 'bar')
+  })
+  it('can be iterated over', () => {
+    const list = new a.ErrorList('foo')
+    const messages = []
+    list.add(new Error('bar'))
+    list.add(new Error('baz'))
+    for (let err of list) {
+      messages.push(err.message)
+    }
+    assert.deepEqual(messages, ['bar', 'baz'])
+  })
+})
+
+},{"..":1,"chai":5}],46:[function(require,module,exports){
+const a = require('..')
+const assert = require('chai').assert
+
+describe('failure', () => {
+  it('returns an Error object on error', async () => {
+    const err = await a.failure(fail())
+    assert.equal(err.message, 'fail')
+  })
+  it('returns undefined on success', async () => {
+    const result = await a.failure(succeed())
+    assert.isUndefined(result)
   })
 
   async function fail() {
@@ -8649,52 +8847,8 @@ describe('completion', () => {
 
   async function succeed() {
     await a.delay(10)
-    return 'ok'
   }
 })
-
-},{"..":1,"chai":5}],45:[function(require,module,exports){
-const a = require('..')
-const assert = require('chai').assert
-
-describe('delay', () => {
-  it('delays by (ms) milliseconds', async () => {
-    const start = Date.now()
-    await a.delay(100)
-    assert.closeTo(Date.now() - start, 100, 10)
-  })
-})
-
-},{"..":1,"chai":5}],46:[function(require,module,exports){
-const a = require('..')
-const assert = require('chai').assert
-
-describe('group', () => {
-  it('returns the results of all promises', async () => {
-    const results = await a.group([ p('foo'), p('bar'), p('baz') ])
-    assert.deepEqual(results, ['foo', 'bar', 'baz'])
-  })
-  it('throws if one of the first `count` results throws', async () => {
-    try {
-      const results = await a.group([ p('foo', 100), f(50), p('baz', 10)])
-      throw new Error('should fail')
-    }
-    catch (err) {
-      assert.equal(err.message, 'fail')
-    }
-  })
-})
-
-function p(val, delay = 0) {
-  return new Promise((resolve, reject) => {
-    setTimeout(() => resolve(val), delay)
-  })
-}
-
-async function f(delay) {
-  await a.delay(delay)
-  throw new Error('fail')
-}
 
 },{"..":1,"chai":5}],47:[function(require,module,exports){
 const a = require('..')
@@ -8779,6 +8933,46 @@ describe('limit', () => {
 const a = require('..')
 const assert = require('chai').assert
 
+describe('list', () => {
+  it('returns the results of all promises', async () => {
+    const results = await a.list([ p('foo'), p('bar'), p('baz') ])
+    assert.deepEqual(results, ['foo', 'bar', 'baz'])
+  })
+  it('throws if one of the results throws', async () => {
+    try {
+      const results = await a.list([ f(120), p('foo', 100), f(50), p('baz', 10)])
+      throw new Error('should fail')
+    }
+    catch (err) {
+      assert.equal(err.message, 'too many failures')
+      assert.equal(err.get(0).message, 'fail')
+    }
+  })
+  it("doesn't throw if failures < ignore", async () => {
+    const results = await a.list([ p('foo', 100), f(50), p('baz', 10)], 1)
+    assert.deepEqual(results, ['foo', undefined, 'baz'])
+  })
+  it('resolves if an error is the last promise to complete', async () => {
+    const results = await a.list([ f(100), p('bar', 50), p('baz', 10)], 1)
+    assert.deepEqual(results, [undefined, 'bar', 'baz'])
+  })
+})
+
+function p(val, delay = 0) {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => resolve(val), delay)
+  })
+}
+
+async function f(delay) {
+  await a.delay(delay)
+  throw new Error('fail')
+}
+
+},{"..":1,"chai":5}],49:[function(require,module,exports){
+const a = require('..')
+const assert = require('chai').assert
+
 describe('map', () => {
   it('maps all items to promises', async () => {
     let results = await a.map(['foo', 'bar', 'baz'], 1, prefix)
@@ -8818,79 +9012,66 @@ describe('map', () => {
   }
 })
 
-},{"..":1,"chai":5}],49:[function(require,module,exports){
-const a = require('..')
-const assert = require('chai').assert
-
-describe('race', () => {
-
-  it('returns the promise that finishes first', async () => {
-    const result = await a.race([prefix('foo', 100), prefix('bar', 20)])
-    assert.equal(result, 'p-bar')
-  })
-
-  it('rejects if a promise rejects early', async () => {
-    try {
-      await a.race([prefix('foo', 100), fail(50)])
-      throw new Error('should fail')
-    }
-    catch (err) {
-      assert.equal(err.message, 'fail')
-    }
-  })
-
-  it('resolves if a promise rejects late', async () => {
-    const result = await a.race([prefix('foo', 50), fail(100)])
-    assert.equal(result, 'p-foo')
-  })
-
-  async function prefix(val, ms=50) {
-    await a.delay(ms)
-    return `p-${val}`
-  }
-
-  async function fail(ms) {
-    await a.delay(ms)
-    throw new Error('fail')
-  }
-})
-
 },{"..":1,"chai":5}],50:[function(require,module,exports){
 const a = require('..')
 const assert = require('chai').assert
 
-describe('rejection', () => {
-  it('returns an Error object on error', async () => {
-    const err = await a.rejection(fail())
-    assert.equal(err.message, 'fail')
+describe('object', () => {
+  it('returns the results of all promises', async () => {
+    const results = await a.object({
+      foo: p('foo'),
+      bar: p('bar'),
+      baz: p('baz')
+    })
+    assert.deepEqual(results, { foo: 'foo', bar: 'bar', baz: 'baz' })
   })
-  it('returns undefined on success', async () => {
-    const result = await a.rejection(succeed())
-    assert.isUndefined(result)
+  it('throws if one of the results throws', async () => {
+    try {
+      const results = await a.object({
+        foo: p('foo', 100),
+        bar: f(50),
+        baz: p('baz', 10)
+      })
+      throw new Error('should fail')
+    }
+    catch (err) {
+      assert.equal(err.message, 'too many failures')
+      assert.equal(err.get(0).message, 'fail')
+    }
   })
-
-  async function fail() {
-    await a.delay(10)
-    throw new Error('fail')
-  }
-
-  async function succeed() {
-    await a.delay(10)
-  }
+  it("doesn't throw if failures < ignore", async () => {
+    const results = await a.object({
+      foo: p('foo', 100),
+      bar: f(50),
+      baz: p('baz', 10)
+    }, 1)
+    assert.deepEqual(results, { foo: 'foo', bar: undefined, baz: 'baz' })
+  })
 })
+
+function p(val, delay = 0) {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => resolve(val), delay)
+  })
+}
+
+async function f(delay) {
+  await a.delay(delay)
+  throw new Error('fail')
+}
 
 },{"..":1,"chai":5}],51:[function(require,module,exports){
 const a = require('..')
 const assert = require('chai').assert
 
-describe('resolution', () => {
+describe('result', () => {
   it('returns a value on success', async () => {
-    const result = await a.resolution(succeed())
+    const result = await a.result(succeed())
     assert.equal(result, 'ok')
   })
-  it('returns undefined on error', async () => {
-    const result = await a.resolution(fail())
-    assert.isUndefined(result)
+  it('returns the Error on error', async () => {
+    const result = await a.result(fail())
+    assert.equal(result.message, 'fail')
   })
 
   async function fail() {
@@ -8908,6 +9089,144 @@ describe('resolution', () => {
 const a = require('..')
 const assert = require('chai').assert
 
+describe('set', () => {
+  it('returns the results of all promises in resolution order', async () => {
+    const results = await a.set([ p('foo', 100), p('bar', 50), p('baz', 10) ])
+    assert.deepEqual(results, ['baz', 'bar', 'foo'])
+  })
+  it('returns `count` results', async () => {
+    const results = await a.set([ p('foo', 100), p('bar', 50), p('baz', 10) ], 2)
+    assert.deepEqual(results, ['baz', 'bar'])
+  })
+  it('throws if one of the first `count` results throws', async () => {
+    try {
+      const results = await a.set([ p('foo', 100), f(50), p('baz', 10) ], 2)
+      throw new Error('should fail')
+    }
+    catch (err) {
+      assert.equal(err.message, 'too many failures')
+    }
+  })
+  it("doesn't throw if promises throw after `count`", async () => {
+    const results = await a.set([ p('foo', 100), f(50), p('baz', 10) ], 1)
+    assert.deepEqual(results, ['baz'])
+  })
+  it("doesn't throw if rejections < ignore", async () => {
+    const results = await a.set([ p('foo', 100), f(50), p('baz', 10) ], 2, 1)
+    assert.deepEqual(results, ['baz', 'foo'])
+  })
+  it('throws if rejections > ignore', async () => {
+    try {
+      const results = await a.set([ f(120), p('foo', 100), f(50), f(10) ], 1, 1)
+      throw new Error('should fail')
+    }
+    catch (err) {
+      assert.equal(err.message, 'too many failures')
+    }
+  })
+  it('throws if rejections > list.length - count even if ignore is higher', async () => {
+    try {
+      const results = await a.set([ p('foo', 100), f(50), f(10) ], 2, 2)
+      throw new Error('should fail')
+    }
+    catch (err) {
+      assert.equal(err.message, 'too many failures')
+    }
+  })
+})
+
+function p(val, delay = 0) {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => resolve(val), delay)
+  })
+}
+
+async function f(delay) {
+  await a.delay(delay)
+  throw new Error('fail')
+}
+
+},{"..":1,"chai":5}],53:[function(require,module,exports){
+const a = require('..')
+const assert = require('chai').assert
+
+describe('single', () => {
+
+  it('returns the promise that finishes first', async () => {
+    const result = await a.single([prefix('foo', 100), prefix('bar', 20)])
+    assert.equal(result, 'p-bar')
+  })
+
+  it('rejects if a promise rejects early', async () => {
+    try {
+      await a.single([prefix('foo', 100), fail(50)])
+      throw new Error('should fail')
+    }
+    catch (err) {
+      assert.equal(err.message, 'too many failures')
+    }
+  })
+
+  it('resolves if a promise rejects late', async () => {
+    const result = await a.single([prefix('foo', 50), fail(100)])
+    assert.equal(result, 'p-foo')
+  })
+
+  it('ignores rejections if ignore > failures', async () => {
+    const result = await a.single([ prefix('foo', 100), fail(50) ], 2)
+    assert.equal(result, 'p-foo')
+  })
+
+  it('throws if ignore is > failures but all promises fail', async () => {
+    try {
+      await a.single([ fail(100), fail(75), fail(50) ], Infinity)
+      throw new Error('should fail')
+    }
+    catch (err) {
+      assert.equal(err.message, 'too many failures')
+    }
+  })
+
+  async function prefix(val, ms=50) {
+    await a.delay(ms)
+    return `p-${val}`
+  }
+
+  async function fail(ms) {
+    await a.delay(ms)
+    throw new Error('fail')
+  }
+})
+
+},{"..":1,"chai":5}],54:[function(require,module,exports){
+const a = require('..')
+const assert = require('chai').assert
+
+describe('success', () => {
+  it('returns a value on success', async () => {
+    const result = await a.success(succeed())
+    assert.equal(result, 'ok')
+  })
+  it('returns undefined on error', async () => {
+    const result = await a.success(fail())
+    assert.isUndefined(result)
+  })
+
+  async function fail() {
+    await a.delay(10)
+    throw new Error('fail')
+  }
+
+  async function succeed() {
+    await a.delay(10)
+    return 'ok'
+  }
+})
+
+},{"..":1,"chai":5}],55:[function(require,module,exports){
+const a = require('..')
+const assert = require('chai').assert
+
 describe('time', () => {
   it('waits until a date if a Date object is provided', async () => {
     const start = Date.now()
@@ -8917,4 +9236,4 @@ describe('time', () => {
   })
 })
 
-},{"..":1,"chai":5}]},{},[42,43,44,45,46,47,48,49,50,51,52]);
+},{"..":1,"chai":5}]},{},[42,43,44,45,46,47,48,49,50,51,52,53,54,55]);
