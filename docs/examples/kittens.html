@@ -17,7 +17,7 @@
         'https://placekitten.com/330/400',
       ]
       const responses = await a.map(urls, 2, fetch)
-      const blobs = await a.map(responses, Infinity, res => res.blob())
+      const blobs = await a.list( responses.map(res => res.blob()) )
       const images = blobs.map(blobToImage)
       images.forEach(image => document.body.appendChild(image))
     }
