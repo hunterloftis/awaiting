@@ -3,27 +3,43 @@
 /**
  * The async/await utility for browsers and Node.js.
  *
+ * (
+ * [github](https://github.com/hunterloftis/awaiting) -
+ * [npm](https://www.npmjs.com/package/awaiting) -
+ * [suggestions / bug reports](https://github.com/hunterloftis/awaiting/issues) -
+ * [installation](https://github.com/hunterloftis/awaiting#installation) -
+ * [motivation](https://github.com/hunterloftis/awaiting#motivation)
+ * )
+ *
  * **`$ yarn add awaiting`**
  *
  * **`$ npm install awaiting --save`**
  *
  * **`<script src='awaiting.js'>`**
  *
- * (
- * [github](https://github.com/hunterloftis/awaiting) -
- * [npm](https://www.npmjs.com/package/awaiting) -
- * [issues](https://github.com/hunterloftis/awaiting/issues) -
- * [installation](https://github.com/hunterloftis/awaiting#installation) -
- * [motivation](https://github.com/hunterloftis/awaiting#motivation)
- * )
- *
  * [![Build Status](https://travis-ci.org/hunterloftis/awaiting.svg?branch=master)](https://travis-ci.org/hunterloftis/awaiting)
  * [![Coverage Status](https://coveralls.io/repos/hunterloftis/awaiting/badge.svg?branch=master)](https://coveralls.io/r/hunterloftis/awaiting?branch=master)
  *
+ * @license MIT
  * @file
  * @example
  *
  * const a = require('awaiting')
+ *
+ * // backup script
+ * while (true) {
+ *   try {
+ *     const urls = await fetch('http://example.com/images')                 // big array of urls
+ *     const images = await a.map(images, 3, fetch)                          // fetch 3 at a time
+ *     const latency = [ ping('backup1'), ping('backup2'), ping('backup3') ] // time all our servers
+ *     const closest = await a.single(latency)                               // choose the fastest
+ *     await a.map(images, 1, upload(closest))                               // backup 1 image at a time
+ *   }
+ *   catch (err) {
+ *     console.error(err.stack || err)
+ *   }
+ *   await a.delay(10 * 60 * 1000)                                         // restart in 10 minutes
+ * }
  */
 
 module.exports = {
@@ -37,15 +53,43 @@ module.exports = {
   list,
   object,
   map,
-  rejection,
-  resolution,
-  completion,
+  failure,
+  success,
+  result,
   throw: throwRejections,
   swallow: swallowRejections,
   ErrorList
 }
 
-function ErrorList(message) {
+/**
+ * Iterable Error type
+ *
+ * Functions that operate on lists throw ErrorLists,
+ * making it possible to inspect all of the Errors that may have been thrown.
+ *
+ * @class
+ * @param {string} message top-level Error message
+ * @returns {iterable.<Error>}
+ * @example
+ *
+ * const err = new ErrorList('several errors')
+ * err.add(new Error('first'))
+ * err.add(new Error('second'))
+ * console.log(err.message, err.get(1).message)
+ * // => several errors second
+ *
+ * @example
+ *
+ * try {
+ *   await a.list([ failing1, failing2, failing3 ])
+ * }
+ * catch (errorList) {
+ *   for (let err of errorList) {
+ *     console.error(err.stack)
+ *   }
+ * }
+ */
+function ErrorList (message) {
   this.name = 'ErrorList'
   this.message = message
   this.stack = (new Error()).stack
@@ -56,10 +100,10 @@ function ErrorList(message) {
 }
 ErrorList.prototype = Object.create(Error.prototype)
 ErrorList.prototype.constructor = ErrorList
-ErrorList.prototype.add = function(err) {
+ErrorList.prototype.add = function (err) {
   this.errors.push(err)
 }
-ErrorList.prototype.get = function(index) {
+ErrorList.prototype.get = function (index) {
   return this.errors[index]
 }
 ErrorList.prototype[Symbol.iterator] = function* () {
@@ -222,7 +266,7 @@ async function single (list, ignore = 0) {
  * console.log(`fastest nameservers: ${first}, ${second}`)
  */
 
-async function set(list, count = Infinity, ignore = 0) {
+async function set (list, count = Infinity, ignore = 0) {
   return new Promise((resolve, reject) => {
     const goal = Math.min(list.length, count)
     const limit = Math.min(list.length - goal, ignore)
@@ -268,13 +312,13 @@ async function list (list, ignore = 0) {
     list.forEach((promise, index) => {
       promise.then(success).catch(error)
 
-      function success(result) {
+      function success (result) {
         if (failures.length > ignore) return
         results[index] = result
         count++
         if (complete()) resolve(results)
       }
-      function error(err) {
+      function error (err) {
         if (failures.length > ignore) return
         results[index] = undefined
         failures.add(err)
@@ -301,7 +345,7 @@ async function list (list, ignore = 0) {
  * console.log(results.pictures, results.comments, results.tweets)
  */
 
-async function object(container, ignore = 0) {
+async function object (container, ignore = 0) {
   const containsPromise = key => typeof container[key].then === 'function'
   const keys = Object.keys(container).filter(containsPromise)
   const promises = keys.map(key => container[key])
@@ -368,10 +412,10 @@ async function map (list, concurrency, fn) {
  * @returns {promise.<Error>} the Error object, or undefined
  * @example
  *
- * const err = await a.rejection(potentialProblem())
+ * const err = await a.failure(potentialProblem())
  * if (err) await fix()
  */
-async function rejection (promise) {
+async function failure (promise) {
   return new Promise((resolve, reject) => {
     promise.then(() => resolve(undefined)).catch(resolve)
   })
@@ -386,11 +430,11 @@ async function rejection (promise) {
  * @example
  *
  * do {
- *   let file = await a.resolution(getNetworkFile())
+ *   let file = await a.success(getNetworkFile())
  *   if (!file) await a.delay(5000)
  * } while (!file)
  */
-async function resolution (promise) {
+async function success (promise) {
   return new Promise((resolve, reject) => {
     promise.then(resolve).catch(err => resolve(undefined)) // eslint-disable-line
   })
@@ -404,9 +448,9 @@ async function resolution (promise) {
  * @returns {promise} the result or error
  * @example
  *
- * await a.completion(mightWork())
+ * await a.result(mightWork())
  */
-async function completion (promise) {
+async function result (promise) {
   return new Promise((resolve, reject) => {
     promise.then(resolve).catch(err => resolve(err))
   })
@@ -8743,31 +8787,6 @@ function read(file, callback) {
 const a = require('..')
 const assert = require('chai').assert
 
-describe('completion', () => {
-  it('returns a value on success', async () => {
-    const result = await a.completion(succeed())
-    assert.equal(result, 'ok')
-  })
-  it('returns the Error on error', async () => {
-    const result = await a.completion(fail())
-    assert.equal(result.message, 'fail')
-  })
-
-  async function fail() {
-    await a.delay(10)
-    throw new Error('fail')
-  }
-
-  async function succeed() {
-    await a.delay(10)
-    return 'ok'
-  }
-})
-
-},{"..":1,"chai":5}],45:[function(require,module,exports){
-const a = require('..')
-const assert = require('chai').assert
-
 describe('delay', () => {
   it('delays by (ms) milliseconds', async () => {
     const start = Date.now()
@@ -8776,7 +8795,7 @@ describe('delay', () => {
   })
 })
 
-},{"..":1,"chai":5}],46:[function(require,module,exports){
+},{"..":1,"chai":5}],45:[function(require,module,exports){
 const a = require('..')
 const assert = require('chai').assert
 
@@ -8805,6 +8824,30 @@ describe('ErrorList', () => {
     }
     assert.deepEqual(messages, ['bar', 'baz'])
   })
+})
+
+},{"..":1,"chai":5}],46:[function(require,module,exports){
+const a = require('..')
+const assert = require('chai').assert
+
+describe('failure', () => {
+  it('returns an Error object on error', async () => {
+    const err = await a.failure(fail())
+    assert.equal(err.message, 'fail')
+  })
+  it('returns undefined on success', async () => {
+    const result = await a.failure(succeed())
+    assert.isUndefined(result)
+  })
+
+  async function fail() {
+    await a.delay(10)
+    throw new Error('fail')
+  }
+
+  async function succeed() {
+    await a.delay(10)
+  }
 })
 
 },{"..":1,"chai":5}],47:[function(require,module,exports){
@@ -8897,7 +8940,7 @@ describe('list', () => {
   })
   it('throws if one of the results throws', async () => {
     try {
-      const results = await a.list([ p('foo', 100), f(50), p('baz', 10)])
+      const results = await a.list([ f(120), p('foo', 100), f(50), p('baz', 10)])
       throw new Error('should fail')
     }
     catch (err) {
@@ -8908,6 +8951,10 @@ describe('list', () => {
   it("doesn't throw if failures < ignore", async () => {
     const results = await a.list([ p('foo', 100), f(50), p('baz', 10)], 1)
     assert.deepEqual(results, ['foo', undefined, 'baz'])
+  })
+  it('resolves if an error is the last promise to complete', async () => {
+    const results = await a.list([ f(100), p('bar', 50), p('baz', 10)], 1)
+    assert.deepEqual(results, [undefined, 'bar', 'baz'])
   })
 })
 
@@ -9017,38 +9064,14 @@ async function f(delay) {
 const a = require('..')
 const assert = require('chai').assert
 
-describe('rejection', () => {
-  it('returns an Error object on error', async () => {
-    const err = await a.rejection(fail())
-    assert.equal(err.message, 'fail')
-  })
-  it('returns undefined on success', async () => {
-    const result = await a.rejection(succeed())
-    assert.isUndefined(result)
-  })
-
-  async function fail() {
-    await a.delay(10)
-    throw new Error('fail')
-  }
-
-  async function succeed() {
-    await a.delay(10)
-  }
-})
-
-},{"..":1,"chai":5}],52:[function(require,module,exports){
-const a = require('..')
-const assert = require('chai').assert
-
-describe('resolution', () => {
+describe('result', () => {
   it('returns a value on success', async () => {
-    const result = await a.resolution(succeed())
+    const result = await a.result(succeed())
     assert.equal(result, 'ok')
   })
-  it('returns undefined on error', async () => {
-    const result = await a.resolution(fail())
-    assert.isUndefined(result)
+  it('returns the Error on error', async () => {
+    const result = await a.result(fail())
+    assert.equal(result.message, 'fail')
   })
 
   async function fail() {
@@ -9062,7 +9085,7 @@ describe('resolution', () => {
   }
 })
 
-},{"..":1,"chai":5}],53:[function(require,module,exports){
+},{"..":1,"chai":5}],52:[function(require,module,exports){
 const a = require('..')
 const assert = require('chai').assert
 
@@ -9094,7 +9117,7 @@ describe('set', () => {
   })
   it('throws if rejections > ignore', async () => {
     try {
-      const results = await a.set([ p('foo', 100), f(50), f(10) ], 1, 1)
+      const results = await a.set([ f(120), p('foo', 100), f(50), f(10) ], 1, 1)
       throw new Error('should fail')
     }
     catch (err) {
@@ -9123,7 +9146,7 @@ async function f(delay) {
   throw new Error('fail')
 }
 
-},{"..":1,"chai":5}],54:[function(require,module,exports){
+},{"..":1,"chai":5}],53:[function(require,module,exports){
 const a = require('..')
 const assert = require('chai').assert
 
@@ -9172,6 +9195,31 @@ describe('single', () => {
   async function fail(ms) {
     await a.delay(ms)
     throw new Error('fail')
+  }
+})
+
+},{"..":1,"chai":5}],54:[function(require,module,exports){
+const a = require('..')
+const assert = require('chai').assert
+
+describe('success', () => {
+  it('returns a value on success', async () => {
+    const result = await a.success(succeed())
+    assert.equal(result, 'ok')
+  })
+  it('returns undefined on error', async () => {
+    const result = await a.success(fail())
+    assert.isUndefined(result)
+  })
+
+  async function fail() {
+    await a.delay(10)
+    throw new Error('fail')
+  }
+
+  async function succeed() {
+    await a.delay(10)
+    return 'ok'
   }
 })
 
