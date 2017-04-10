@@ -6,6 +6,7 @@ The async/await utility for browsers and Node.js.
 [Installation](#installation) |
 [Examples](#examples) |
 [Motivation](#motivation)
+[API Overview](#api-overview)
 
 - Node.js >= 0.7.6
 - Edge >= 15
