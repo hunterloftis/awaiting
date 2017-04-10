@@ -213,7 +213,7 @@
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/hunterloftis/awaiting/blob/5d1c2d224445b853fca3e797d4629f272638578e/lib/awaiting.js#L30-L47'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/hunterloftis/awaiting/blob/fa1e7ec31e726358c3b98f4720425a69509a274d/lib/awaiting.js#L30-L47'>
       <span>lib/awaiting.js</span>
       </a>
     
@@ -283,7 +283,7 @@
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/hunterloftis/awaiting/blob/5d1c2d224445b853fca3e797d4629f272638578e/lib/awaiting.js#L212-L219'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/hunterloftis/awaiting/blob/fa1e7ec31e726358c3b98f4720425a69509a274d/lib/awaiting.js#L212-L219'>
       <span>lib/awaiting.js</span>
       </a>
     
@@ -374,7 +374,7 @@ Waits for the callback result, throwing an Error if err is truthy.</p>
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/hunterloftis/awaiting/blob/5d1c2d224445b853fca3e797d4629f272638578e/lib/awaiting.js#L114-L118'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/hunterloftis/awaiting/blob/fa1e7ec31e726358c3b98f4720425a69509a274d/lib/awaiting.js#L114-L118'>
       <span>lib/awaiting.js</span>
       </a>
     
@@ -455,7 +455,7 @@ Waits for the callback result, throwing an Error if err is truthy.</p>
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/hunterloftis/awaiting/blob/5d1c2d224445b853fca3e797d4629f272638578e/lib/awaiting.js#L77-L85'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/hunterloftis/awaiting/blob/fa1e7ec31e726358c3b98f4720425a69509a274d/lib/awaiting.js#L77-L85'>
       <span>lib/awaiting.js</span>
       </a>
     
@@ -549,7 +549,7 @@ err.add(<span class="hljs-keyword">new</span> <span class="hljs-built_in">Error<
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/hunterloftis/awaiting/blob/5d1c2d224445b853fca3e797d4629f272638578e/lib/awaiting.js#L191-L197'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/hunterloftis/awaiting/blob/fa1e7ec31e726358c3b98f4720425a69509a274d/lib/awaiting.js#L191-L197'>
       <span>lib/awaiting.js</span>
       </a>
     
@@ -638,7 +638,7 @@ err.add(<span class="hljs-keyword">new</span> <span class="hljs-built_in">Error<
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/hunterloftis/awaiting/blob/5d1c2d224445b853fca3e797d4629f272638578e/lib/awaiting.js#L403-L407'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/hunterloftis/awaiting/blob/fa1e7ec31e726358c3b98f4720425a69509a274d/lib/awaiting.js#L409-L413'>
       <span>lib/awaiting.js</span>
       </a>
     
@@ -692,8 +692,10 @@ If <code>promise</code> resolves successfully, returns <code>undefined</code>.</
     <div class='py1 quiet mt1 prose-big'>Example</div>
     
       
-      <pre class='p1 overflow-auto round fill-light'><span class="hljs-keyword">const</span> err = <span class="hljs-keyword">await</span> a.failure(potentialProblem())
-<span class="hljs-keyword">if</span> (err) <span class="hljs-keyword">await</span> fix()</pre>
+      <pre class='p1 overflow-auto round fill-light'>test(<span class="hljs-string">'throws "foo"'</span>, () =&gt; {
+  <span class="hljs-keyword">const</span> err = <span class="hljs-keyword">await</span> a.failure(shouldThrow())
+  assert.equal(err, <span class="hljs-string">'foo'</span>)
+})</pre>
     
   
 
@@ -717,7 +719,7 @@ If <code>promise</code> resolves successfully, returns <code>undefined</code>.</
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/hunterloftis/awaiting/blob/5d1c2d224445b853fca3e797d4629f272638578e/lib/awaiting.js#L149-L179'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/hunterloftis/awaiting/blob/fa1e7ec31e726358c3b98f4720425a69509a274d/lib/awaiting.js#L149-L179'>
       <span>lib/awaiting.js</span>
       </a>
     
@@ -807,7 +809,7 @@ If <code>limiter</code> is a number, limits by time in milliseconds</p>
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/hunterloftis/awaiting/blob/5d1c2d224445b853fca3e797d4629f272638578e/lib/awaiting.js#L291-L315'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/hunterloftis/awaiting/blob/fa1e7ec31e726358c3b98f4720425a69509a274d/lib/awaiting.js#L293-L317'>
       <span>lib/awaiting.js</span>
       </a>
     
@@ -815,6 +817,7 @@ If <code>limiter</code> is a number, limits by time in milliseconds</p>
   
 
   <p>Waits for all Promises in <code>list</code> to resolve.</p>
+<p>Like <code>Promise.all</code> with the option to ignore some (or all) rejections.</p>
 
 
   <div class='pre p1 fill-light mt0'>list(list: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">array</a>, ignore: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>?= 0): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">promise</a>&#x3C;<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>></div>
@@ -896,7 +899,7 @@ If <code>limiter</code> is a number, limits by time in milliseconds</p>
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/hunterloftis/awaiting/blob/5d1c2d224445b853fca3e797d4629f272638578e/lib/awaiting.js#L359-L390'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/hunterloftis/awaiting/blob/fa1e7ec31e726358c3b98f4720425a69509a274d/lib/awaiting.js#L363-L394'>
       <span>lib/awaiting.js</span>
       </a>
     
@@ -904,8 +907,9 @@ If <code>limiter</code> is a number, limits by time in milliseconds</p>
   
 
   <p>Passes each item in <code>list</code> to the Promise-returning function <code>fn</code>,
-running at most <code>concurrency</code> simultaneous promises.
-Throws an Error if any promise rejects.</p>
+running at most <code>concurrency</code> simultaneous promises.</p>
+<p>For cases where starting all Promises simultaneously is infeasible,
+such as making a large number of requests to a server with rate-limiting.</p>
 
 
   <div class='pre p1 fill-light mt0'>map(list: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">array</a>, concurrency: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>, fn: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">function</a>)</div>
@@ -987,7 +991,7 @@ Throws an Error if any promise rejects.</p>
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/hunterloftis/awaiting/blob/5d1c2d224445b853fca3e797d4629f272638578e/lib/awaiting.js#L333-L344'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/hunterloftis/awaiting/blob/fa1e7ec31e726358c3b98f4720425a69509a274d/lib/awaiting.js#L335-L346'>
       <span>lib/awaiting.js</span>
       </a>
     
@@ -1078,7 +1082,7 @@ Throws an Error if any promise rejects.</p>
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/hunterloftis/awaiting/blob/5d1c2d224445b853fca3e797d4629f272638578e/lib/awaiting.js#L438-L442'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/hunterloftis/awaiting/blob/fa1e7ec31e726358c3b98f4720425a69509a274d/lib/awaiting.js#L442-L446'>
       <span>lib/awaiting.js</span>
       </a>
     
@@ -1156,7 +1160,7 @@ Returns either the resolved value, or the Error object.</p>
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/hunterloftis/awaiting/blob/5d1c2d224445b853fca3e797d4629f272638578e/lib/awaiting.js#L254-L277'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/hunterloftis/awaiting/blob/fa1e7ec31e726358c3b98f4720425a69509a274d/lib/awaiting.js#L254-L277'>
       <span>lib/awaiting.js</span>
       </a>
     
@@ -1260,7 +1264,7 @@ Returns either the resolved value, or the Error object.</p>
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/hunterloftis/awaiting/blob/5d1c2d224445b853fca3e797d4629f272638578e/lib/awaiting.js#L231-L234'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/hunterloftis/awaiting/blob/fa1e7ec31e726358c3b98f4720425a69509a274d/lib/awaiting.js#L231-L234'>
       <span>lib/awaiting.js</span>
       </a>
     
@@ -1348,7 +1352,7 @@ Returns either the resolved value, or the Error object.</p>
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/hunterloftis/awaiting/blob/5d1c2d224445b853fca3e797d4629f272638578e/lib/awaiting.js#L422-L426'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/hunterloftis/awaiting/blob/fa1e7ec31e726358c3b98f4720425a69509a274d/lib/awaiting.js#L426-L430'>
       <span>lib/awaiting.js</span>
       </a>
     
@@ -1402,10 +1406,8 @@ If <code>promise</code> throws an Error, returns <code>undefined</code>.</p>
     <div class='py1 quiet mt1 prose-big'>Example</div>
     
       
-      <pre class='p1 overflow-auto round fill-light'><span class="hljs-keyword">do</span> {
-  <span class="hljs-keyword">let</span> file = <span class="hljs-keyword">await</span> a.success(getNetworkFile())
-  <span class="hljs-keyword">if</span> (!file) <span class="hljs-keyword">await</span> a.delay(<span class="hljs-number">5000</span>)
-} <span class="hljs-keyword">while</span> (!file)</pre>
+      <pre class='p1 overflow-auto round fill-light'><span class="hljs-keyword">const</span> isNodeProject = <span class="hljs-keyword">await</span> a.success(a.callback(fs.access, packageJSON))
+<span class="hljs-keyword">if</span> (isNodeProject) doSomething()</pre>
     
   
 
@@ -1429,15 +1431,18 @@ If <code>promise</code> throws an Error, returns <code>undefined</code>.</p>
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/hunterloftis/awaiting/blob/5d1c2d224445b853fca3e797d4629f272638578e/lib/awaiting.js#L487-L491'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/hunterloftis/awaiting/blob/fa1e7ec31e726358c3b98f4720425a69509a274d/lib/awaiting.js#L497-L501'>
       <span>lib/awaiting.js</span>
       </a>
     
   </div>
   
 
-  <p>Silently swallows unhandled rejections.
-<code>throw</code> and <code>swallow</code> can be called multiple times but will only attach a single listener.</p>
+  <p>Silently swallows unhandled rejections.</p>
+<p>This is an anti-pattern, but if you depend on a module that doesn't handle all of its rejections,
+you'll get a lot of really annoying logs in current versions of node.
+<code>swallow</code> will allow you to suppress them.</p>
+<p><code>throw</code> and <code>swallow</code> can be called multiple times but will only attach a single listener.</p>
 
 
   <div class='pre p1 fill-light mt0'>swallow(): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined">undefined</a></div>
@@ -1500,7 +1505,7 @@ failingPromise()
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/hunterloftis/awaiting/blob/5d1c2d224445b853fca3e797d4629f272638578e/lib/awaiting.js#L465-L469'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/hunterloftis/awaiting/blob/fa1e7ec31e726358c3b98f4720425a69509a274d/lib/awaiting.js#L469-L473'>
       <span>lib/awaiting.js</span>
       </a>
     
@@ -1576,7 +1581,7 @@ failingPromise()
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/hunterloftis/awaiting/blob/5d1c2d224445b853fca3e797d4629f272638578e/lib/awaiting.js#L131-L134'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/hunterloftis/awaiting/blob/fa1e7ec31e726358c3b98f4720425a69509a274d/lib/awaiting.js#L131-L134'>
       <span>lib/awaiting.js</span>
       </a>
     
