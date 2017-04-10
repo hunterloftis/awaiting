@@ -130,6 +130,28 @@ Instead, awaiting follows the example of
 [underscore](http://underscorejs.org/),
 which chose not to replace or extend native Arrays and Objects, but instead provided functional utilities for them.
 
+## API Overview
+
+This illustrates use cases for each utility.
+For details, use the [full API docs](https://hunterloftis.github.io/awaiting/).
+Use these when you want to...
+
+- **callback:** treat a callback function (like one of the core node APIs) as an async function.
+- **delay:** wait for some time to pass.
+- **event:** treat an EventEmitter's event (like `server.on('listen')`) as an async function.
+- **failure:** inspect the Error from a probable failure (vs throwing / exiting)
+- **limit:** limit the runtime of an async function so your program doesn't hang.
+- **list:** wait for a list of async functions to resolve simultaneously, possibly ignoring some number of rejections.
+- **map:** wait for a list of async functions to resolve, limiting how many run simultaneously to avoid running out of memory or hammering a server with too many requests.
+- **object:** resolve several async functions simultaneously which are stored as properties of an object.
+- **result:** wait for an async function to resolve or reject, then check to see whether it returned a result or an Error.
+- **set:** wait for a minimum set of async functions to resolve, such as pinging a dozen servers and seeing which two are fastest.
+- **single:** wait for a single async function to resolve from a list.
+- **success:** ignore the result of an async function (`undefined`) if it fails.
+- **swallow:** use someone else's module that throws a lot of unhandled rejection errors.
+- **throw:** get useful stack traces from your unhandled rejections instead of just console logs.
+- **time:** wait for a specific time (as a `Date` object).
+
 ## Building
 
 ```
