@@ -7,7 +7,7 @@ The async/await utility for browsers and Node.js.
 [Examples](#examples) |
 [Motivation](#motivation)
 
-- Node.js >= 0.7.6
+- Node.js >= 7.6.0
 - Edge >= 15
 - Firefox >= 52
 - Chrome >= 55
