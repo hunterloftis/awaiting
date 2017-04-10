@@ -134,8 +134,9 @@ which chose not to replace or extend native Arrays and Objects, but instead prov
 ## API Overview
 
 This illustrates use cases for each utility.
-For details, use the [full API docs](https://hunterloftis.github.io/awaiting/).
-Use these when you want to...
+For details, see the [full API docs](https://hunterloftis.github.io/awaiting/).
+
+Use this when you want to...
 
 - **callback:** treat a callback function (like one of the core node APIs) as an async function.
 - **delay:** wait for some time to pass.
