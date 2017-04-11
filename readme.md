@@ -36,7 +36,12 @@ $ npm install --save awaiting
 
 ```js
 const a = require('awaiting')
-await a.delay(1000)
+
+main()
+
+async function main() {
+  await a.delay(1000)
+}
 ```
 
 ### In a browser
@@ -47,7 +52,12 @@ Use [browser/awaiting.js](https://raw.githubusercontent.com/hunterloftis/awaitin
 <script src='awaiting.js'></script>
 <script>
   const a = awaiting
-  await a.delay(1000)
+
+  main()
+  
+  async function main() {
+    await a.delay(1000)
+  }
 </script>
 ```
 
