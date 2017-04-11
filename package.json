@@ -4,6 +4,7 @@
   "engines": {
     "node": ">=7.6.x"
   },
+  "keywords": [ "async", "await", "promise", "promises", "bluebird", "flow", "control flow", "es6" ],
   "repository": "hunterloftis/awaiting",
   "bugs": "https://github.com/hunterloftis/awaiting/issues",
   "scripts": {

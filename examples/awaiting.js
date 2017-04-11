@@ -26,21 +26,8 @@
  * @example
  *
  * const a = require('awaiting')
- *
- * // backup script
- * while (true) {
- *   try {
- *     const urls = await fetch('http://example.com/images')                 // big array of urls
- *     const images = await a.map(images, 3, fetch)                          // fetch 3 at a time
- *     const latency = [ ping('backup1'), ping('backup2'), ping('backup3') ] // time all our servers
- *     const closest = await a.single(latency)                               // choose the fastest
- *     await a.map(images, 1, upload(closest))                               // backup 1 image at a time
- *   }
- *   catch (err) {
- *     console.error(err.stack || err)
- *   }
- *   await a.delay(10 * 60 * 1000)                                         // restart in 10 minutes
- * }
+ * // ...
+ * await a.delay(1000)
  */
 
 module.exports = {
@@ -295,6 +282,8 @@ async function set (list, count = Infinity, ignore = 0) {
 /**
  * Waits for all Promises in `list` to resolve.
  *
+ * Like `Promise.all` with the option to ignore some (or all) rejections.
+ *
  * @param {array} list promises
  * @param {number} ignore rejections to ignore
  * @returns {promise.<Array>} promised results in order
@@ -362,7 +351,9 @@ async function object (container, ignore = 0) {
 /**
  * Passes each item in `list` to the Promise-returning function `fn`,
  * running at most `concurrency` simultaneous promises.
- * Throws an Error if any promise rejects.
+ *
+ * For cases where starting all Promises simultaneously is infeasible,
+ * such as making a large number of requests to a server with rate-limiting.
  *
  * @param {array} list items to pass to each promise
  * @param {number} concurrency maximum concurrency
@@ -413,8 +404,10 @@ async function map (list, concurrency, fn) {
  * @returns {promise.<Error>} the Error object, or undefined
  * @example
  *
- * const err = await a.failure(potentialProblem())
- * if (err) await fix()
+ * test('throws "foo"', () => {
+ *   const err = await a.failure(shouldThrow())
+ *   assert.equal(err.message, 'foo')
+ * })
  */
 async function failure (promise) {
   return new Promise((resolve, reject) => {
@@ -430,10 +423,8 @@ async function failure (promise) {
  * @returns {promise} the result, or undefined
  * @example
  *
- * do {
- *   let file = await a.success(getNetworkFile())
- *   if (!file) await a.delay(5000)
- * } while (!file)
+ * const isNodeProject = await a.success(a.callback(fs.access, packageJSON))
+ * if (isNodeProject) doSomething()
  */
 async function success (promise) {
   return new Promise((resolve, reject) => {
@@ -449,7 +440,9 @@ async function success (promise) {
  * @returns {promise} the result or error
  * @example
  *
- * await a.result(mightWork())
+ * $("#ajax-loader-animation").show()
+ * await a.result(loadAjaxData())
+ * $("#ajax-loader-animation").hide();
  */
 async function result (promise) {
   return new Promise((resolve, reject) => {
@@ -458,8 +451,10 @@ async function result (promise) {
 }
 
 /**
- * Provides a stack tsingle for unhandled rejections instead of the default message string.
+ * Provides a stack trace for unhandled rejections instead of the default message string.
+ *
  * `throw` and `swallow` can be called multiple times but will only attach a single listener.
+ *
  * @alias throw
  * @returns {undefined}
  * @example
@@ -486,7 +481,13 @@ function throwRejections () {
 
 /**
  * Silently swallows unhandled rejections.
-* `throw` and `swallow` can be called multiple times but will only attach a single listener.
+ *
+ * This is an anti-pattern, but if you depend on a module that doesn't handle all of its rejections,
+ * you'll get a lot of really annoying logs in current versions of node.
+ * `swallow` will allow you to suppress them.
+ *
+ * `throw` and `swallow` can be called multiple times but will only attach a single listener.
+ *
  * @alias swallow
  * @returns {undefined}
  * @example
