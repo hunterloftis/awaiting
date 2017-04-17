@@ -1,6 +1,6 @@
 {
   "name": "awaiting",
-  "version": "2.0.1",
+  "version": "2.1.0",
   "engines": {
     "node": ">=7.6.x"
   },
