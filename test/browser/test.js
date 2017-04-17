@@ -44,6 +44,7 @@ module.exports = {
   failure,
   success,
   result,
+  awaitable,
   throw: throwRejections,
   swallow: swallowRejections,
   ErrorList
@@ -505,6 +506,23 @@ function swallowRejections () {
   process.removeListener('unhandledRejection', throwOnRejection)
   process.removeListener('unhandledRejection', swallowOnRejection)
   process.on('unhandledRejection', swallowOnRejection)
+}
+
+/**
+ * Wraps a node style function (see `callback`) into a new function, which instead of taking a callback
+ * function, returns an async function (`Promise`). This `Promise` resolves if the first (error) argument of the
+ * callback was called with a falsy value, rejects with the error otherwise. Takes the rest of the
+ * arguments as the original function `fn`.
+ *
+ * @returns {function}
+ * @example
+ *
+ * const fs = require('fs')
+ * const readFile = a.awaitable(fs.readFile)
+ * const contents = await readFile('foo.txt', 'utf-8')
+ */
+function awaitable (fn) {
+  return async (...args) => callback(fn, ...args)
 }
 
 function throwOnRejection (err, promise) { throw err }
@@ -8751,13 +8769,44 @@ Library.prototype.test = function(obj, type) {
 const a = require('..')
 const assert = require('chai').assert
 
+describe('awaitable', () => {
+  const awaitableRead = a.awaitable(read)
+
+  it('awaitable correctly handles resolution', async () => {
+    const result = await awaitableRead('foo.txt')
+    assert.equal(result, 'contents')
+  })
+
+  it('awaitable correctly handles rejection', async () => {
+    try {
+      const result = await awaitableRead('bar.txt')
+      throw new Error('should fail')
+    }
+    catch (err) {
+      assert.equal(err.message, 'file not found')
+    }
+  })
+})
+
+function read(file, callback) {
+  if (file !== 'foo.txt') {
+    setTimeout(() => callback(new Error('file not found')), 0)
+    return
+  }
+  setTimeout(() => callback(null, 'contents'), 0)
+}
+
+},{"..":1,"chai":5}],43:[function(require,module,exports){
+const a = require('..')
+const assert = require('chai').assert
+
 describe('awaiting', () => {
   it('returns an object', () => {
     assert.isObject(a)
   })
 })
 
-},{"..":1,"chai":5}],43:[function(require,module,exports){
+},{"..":1,"chai":5}],44:[function(require,module,exports){
 const a = require('..')
 const assert = require('chai').assert
 
@@ -8785,7 +8834,7 @@ function read(file, callback) {
   setTimeout(() => callback(null, 'contents'), 0)
 }
 
-},{"..":1,"chai":5}],44:[function(require,module,exports){
+},{"..":1,"chai":5}],45:[function(require,module,exports){
 const a = require('..')
 const assert = require('chai').assert
 
@@ -8797,7 +8846,7 @@ describe('delay', () => {
   })
 })
 
-},{"..":1,"chai":5}],45:[function(require,module,exports){
+},{"..":1,"chai":5}],46:[function(require,module,exports){
 const a = require('..')
 const assert = require('chai').assert
 
@@ -8828,7 +8877,7 @@ describe('ErrorList', () => {
   })
 })
 
-},{"..":1,"chai":5}],46:[function(require,module,exports){
+},{"..":1,"chai":5}],47:[function(require,module,exports){
 const a = require('..')
 const assert = require('chai').assert
 
@@ -8852,7 +8901,7 @@ describe('failure', () => {
   }
 })
 
-},{"..":1,"chai":5}],47:[function(require,module,exports){
+},{"..":1,"chai":5}],48:[function(require,module,exports){
 const a = require('..')
 const assert = require('chai').assert
 
@@ -8931,7 +8980,7 @@ describe('limit', () => {
   }
 })
 
-},{"..":1,"chai":5}],48:[function(require,module,exports){
+},{"..":1,"chai":5}],49:[function(require,module,exports){
 const a = require('..')
 const assert = require('chai').assert
 
@@ -8971,7 +9020,7 @@ async function f(delay) {
   throw new Error('fail')
 }
 
-},{"..":1,"chai":5}],49:[function(require,module,exports){
+},{"..":1,"chai":5}],50:[function(require,module,exports){
 const a = require('..')
 const assert = require('chai').assert
 
@@ -9014,7 +9063,7 @@ describe('map', () => {
   }
 })
 
-},{"..":1,"chai":5}],50:[function(require,module,exports){
+},{"..":1,"chai":5}],51:[function(require,module,exports){
 const a = require('..')
 const assert = require('chai').assert
 
@@ -9062,7 +9111,7 @@ async function f(delay) {
   throw new Error('fail')
 }
 
-},{"..":1,"chai":5}],51:[function(require,module,exports){
+},{"..":1,"chai":5}],52:[function(require,module,exports){
 const a = require('..')
 const assert = require('chai').assert
 
@@ -9087,7 +9136,7 @@ describe('result', () => {
   }
 })
 
-},{"..":1,"chai":5}],52:[function(require,module,exports){
+},{"..":1,"chai":5}],53:[function(require,module,exports){
 const a = require('..')
 const assert = require('chai').assert
 
@@ -9148,7 +9197,7 @@ async function f(delay) {
   throw new Error('fail')
 }
 
-},{"..":1,"chai":5}],53:[function(require,module,exports){
+},{"..":1,"chai":5}],54:[function(require,module,exports){
 const a = require('..')
 const assert = require('chai').assert
 
@@ -9200,7 +9249,7 @@ describe('single', () => {
   }
 })
 
-},{"..":1,"chai":5}],54:[function(require,module,exports){
+},{"..":1,"chai":5}],55:[function(require,module,exports){
 const a = require('..')
 const assert = require('chai').assert
 
@@ -9225,7 +9274,7 @@ describe('success', () => {
   }
 })
 
-},{"..":1,"chai":5}],55:[function(require,module,exports){
+},{"..":1,"chai":5}],56:[function(require,module,exports){
 const a = require('..')
 const assert = require('chai').assert
 
@@ -9238,4 +9287,4 @@ describe('time', () => {
   })
 })
 
-},{"..":1,"chai":5}]},{},[42,43,44,45,46,47,48,49,50,51,52,53,54,55]);
+},{"..":1,"chai":5}]},{},[42,43,44,45,46,47,48,49,50,51,52,53,54,55,56]);
