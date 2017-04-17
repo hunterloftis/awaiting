@@ -44,7 +44,8 @@ module.exports = {
   failure,
   success,
   result,
-  awaitable,
+  awaited,
+  awaitable: awaited,
   throw: throwRejections,
   swallow: swallowRejections,
   ErrorList
@@ -221,6 +222,26 @@ async function callback (fn, ...args) {
     })
   })
 }
+
+/**
+ * Wraps a node style function (see `callback`) into a new function, which instead of taking a callback
+ * function, returns an async function (`Promise`). This `Promise` resolves if the first (error) argument of the
+ * callback was called with a falsy value, rejects with the error otherwise. Takes the rest of the
+ * arguments as the original function `fn`.
+ *
+ * @returns {function}
+ * @example
+ *
+ * const fs = require('fs')
+ * const readFile = a.awaited(fs.readFile)
+ * const contents = await readFile('foo.txt', 'utf-8')
+ */
+function awaited (fn) {
+  return async (...args) => callback(fn, ...args)
+}
+
+function throwOnRejection (err, promise) { throw err }
+function swallowOnRejection (err, promise) {} // eslint-disable-line
 
 /**
  * Waits for the first Promise in `list` to resolve.
@@ -507,26 +528,6 @@ function swallowRejections () {
   process.removeListener('unhandledRejection', swallowOnRejection)
   process.on('unhandledRejection', swallowOnRejection)
 }
-
-/**
- * Wraps a node style function (see `callback`) into a new function, which instead of taking a callback
- * function, returns an async function (`Promise`). This `Promise` resolves if the first (error) argument of the
- * callback was called with a falsy value, rejects with the error otherwise. Takes the rest of the
- * arguments as the original function `fn`.
- *
- * @returns {function}
- * @example
- *
- * const fs = require('fs')
- * const readFile = a.awaitable(fs.readFile)
- * const contents = await readFile('foo.txt', 'utf-8')
- */
-function awaitable (fn) {
-  return async (...args) => callback(fn, ...args)
-}
-
-function throwOnRejection (err, promise) { throw err }
-function swallowOnRejection (err, promise) {} // eslint-disable-line
 
 }).call(this,require('_process'))
 },{"_process":2}],2:[function(require,module,exports){
