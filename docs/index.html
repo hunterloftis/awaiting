@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta charset='utf-8' />
-  <title>awaiting 2.0.1 | Documentation</title>
+  <title>awaiting 2.1.0 | Documentation</title>
   <meta name='viewport' content='width=device-width,initial-scale=1'>
   <link href='assets/bass.css' type='text/css' rel='stylesheet' />
   <link href='assets/style.css' type='text/css' rel='stylesheet' />
@@ -14,7 +14,7 @@
       <div class='fixed xs-hide fix-3 overflow-auto max-height-100'>
         <div class='py1 px2'>
           <h3 class='mb0 no-anchor'>awaiting</h3>
-          <div class='mb1'><code>2.0.1</code></div>
+          <div class='mb1'><code>2.1.0</code></div>
           <input
             placeholder='Filter'
             id='filter-input'
@@ -22,6 +22,16 @@
             type='text' />
           <div id='toc'>
             <ul class='list-reset h5 py1-ul'>
+              
+                
+                <li><a
+                  href='#awaitable'
+                  class="">
+                  awaitable
+                  
+                </a>
+                
+                </li>
               
                 
                 <li><a
@@ -208,12 +218,94 @@
   
   <div class='clearfix'>
     
+    <h3 class='fl m0' id='awaitable'>
+      awaitable
+    </h3>
+    
+    
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/hunterloftis/awaiting/blob/4b8d26d7769950db72afd210bec29a016fd0637c/lib/awaiting.js#L522-L524'>
+      <span>lib/awaiting.js</span>
+      </a>
+    
+  </div>
+  
+
+  <p>Wraps a node style function (see <code>callback</code>) into a new function, which instead of taking a callback
+function, returns an async function (<code>Promise</code>). This <code>Promise</code> resolves if the first (error) argument of the
+callback was called with a falsy value, rejects with the error otherwise. Takes the rest of the
+arguments as the original function <code>fn</code>.</p>
+
+
+  <div class='pre p1 fill-light mt0'>awaitable(fn: any): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">function</a></div>
+  
+  
+
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>fn</span> <code class='quiet'>(any)</code>
+	    
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">function</a></code>:
+        
+
+      
+    
+  
+
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Example</div>
+    
+      
+      <pre class='p1 overflow-auto round fill-light'><span class="hljs-keyword">const</span> fs = <span class="hljs-built_in">require</span>(<span class="hljs-string">'fs'</span>)
+<span class="hljs-keyword">const</span> readFile = a.awaitable(fs.readFile)
+<span class="hljs-keyword">const</span> contents = <span class="hljs-keyword">await</span> readFile(<span class="hljs-string">'foo.txt'</span>, <span class="hljs-string">'utf-8'</span>)</pre>
+    
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
     <h3 class='fl m0' id='awaiting'>
       awaiting
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/hunterloftis/awaiting/blob/62026b6789c36cb8b17826e279ce7bed25803a19/lib/awaiting.js#L31-L48'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/hunterloftis/awaiting/blob/4b8d26d7769950db72afd210bec29a016fd0637c/lib/awaiting.js#L31-L49'>
       <span>lib/awaiting.js</span>
       </a>
     
@@ -284,7 +376,7 @@
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/hunterloftis/awaiting/blob/62026b6789c36cb8b17826e279ce7bed25803a19/lib/awaiting.js#L213-L220'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/hunterloftis/awaiting/blob/4b8d26d7769950db72afd210bec29a016fd0637c/lib/awaiting.js#L214-L221'>
       <span>lib/awaiting.js</span>
       </a>
     
@@ -375,7 +467,7 @@ Waits for the callback result, throwing an Error if err is truthy.</p>
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/hunterloftis/awaiting/blob/62026b6789c36cb8b17826e279ce7bed25803a19/lib/awaiting.js#L115-L119'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/hunterloftis/awaiting/blob/4b8d26d7769950db72afd210bec29a016fd0637c/lib/awaiting.js#L116-L120'>
       <span>lib/awaiting.js</span>
       </a>
     
@@ -456,7 +548,7 @@ Waits for the callback result, throwing an Error if err is truthy.</p>
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/hunterloftis/awaiting/blob/62026b6789c36cb8b17826e279ce7bed25803a19/lib/awaiting.js#L78-L86'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/hunterloftis/awaiting/blob/4b8d26d7769950db72afd210bec29a016fd0637c/lib/awaiting.js#L79-L87'>
       <span>lib/awaiting.js</span>
       </a>
     
@@ -550,7 +642,7 @@ err.add(<span class="hljs-keyword">new</span> <span class="hljs-built_in">Error<
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/hunterloftis/awaiting/blob/62026b6789c36cb8b17826e279ce7bed25803a19/lib/awaiting.js#L192-L198'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/hunterloftis/awaiting/blob/4b8d26d7769950db72afd210bec29a016fd0637c/lib/awaiting.js#L193-L199'>
       <span>lib/awaiting.js</span>
       </a>
     
@@ -639,7 +731,7 @@ err.add(<span class="hljs-keyword">new</span> <span class="hljs-built_in">Error<
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/hunterloftis/awaiting/blob/62026b6789c36cb8b17826e279ce7bed25803a19/lib/awaiting.js#L410-L414'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/hunterloftis/awaiting/blob/4b8d26d7769950db72afd210bec29a016fd0637c/lib/awaiting.js#L411-L415'>
       <span>lib/awaiting.js</span>
       </a>
     
@@ -720,7 +812,7 @@ If <code>promise</code> resolves successfully, returns <code>undefined</code>.</
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/hunterloftis/awaiting/blob/62026b6789c36cb8b17826e279ce7bed25803a19/lib/awaiting.js#L150-L180'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/hunterloftis/awaiting/blob/4b8d26d7769950db72afd210bec29a016fd0637c/lib/awaiting.js#L151-L181'>
       <span>lib/awaiting.js</span>
       </a>
     
@@ -810,7 +902,7 @@ If <code>limiter</code> is a number, limits by time in milliseconds</p>
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/hunterloftis/awaiting/blob/62026b6789c36cb8b17826e279ce7bed25803a19/lib/awaiting.js#L294-L318'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/hunterloftis/awaiting/blob/4b8d26d7769950db72afd210bec29a016fd0637c/lib/awaiting.js#L295-L319'>
       <span>lib/awaiting.js</span>
       </a>
     
@@ -900,7 +992,7 @@ If <code>limiter</code> is a number, limits by time in milliseconds</p>
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/hunterloftis/awaiting/blob/62026b6789c36cb8b17826e279ce7bed25803a19/lib/awaiting.js#L364-L395'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/hunterloftis/awaiting/blob/4b8d26d7769950db72afd210bec29a016fd0637c/lib/awaiting.js#L365-L396'>
       <span>lib/awaiting.js</span>
       </a>
     
@@ -992,7 +1084,7 @@ such as making a large number of requests to a server with rate-limiting.</p>
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/hunterloftis/awaiting/blob/62026b6789c36cb8b17826e279ce7bed25803a19/lib/awaiting.js#L336-L347'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/hunterloftis/awaiting/blob/4b8d26d7769950db72afd210bec29a016fd0637c/lib/awaiting.js#L337-L348'>
       <span>lib/awaiting.js</span>
       </a>
     
@@ -1083,7 +1175,7 @@ such as making a large number of requests to a server with rate-limiting.</p>
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/hunterloftis/awaiting/blob/62026b6789c36cb8b17826e279ce7bed25803a19/lib/awaiting.js#L445-L449'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/hunterloftis/awaiting/blob/4b8d26d7769950db72afd210bec29a016fd0637c/lib/awaiting.js#L446-L450'>
       <span>lib/awaiting.js</span>
       </a>
     
@@ -1163,7 +1255,7 @@ $(<span class="hljs-string">"#ajax-loader-animation"</span>).hide();</pre>
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/hunterloftis/awaiting/blob/62026b6789c36cb8b17826e279ce7bed25803a19/lib/awaiting.js#L255-L278'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/hunterloftis/awaiting/blob/4b8d26d7769950db72afd210bec29a016fd0637c/lib/awaiting.js#L256-L279'>
       <span>lib/awaiting.js</span>
       </a>
     
@@ -1267,7 +1359,7 @@ $(<span class="hljs-string">"#ajax-loader-animation"</span>).hide();</pre>
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/hunterloftis/awaiting/blob/62026b6789c36cb8b17826e279ce7bed25803a19/lib/awaiting.js#L232-L235'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/hunterloftis/awaiting/blob/4b8d26d7769950db72afd210bec29a016fd0637c/lib/awaiting.js#L233-L236'>
       <span>lib/awaiting.js</span>
       </a>
     
@@ -1355,7 +1447,7 @@ $(<span class="hljs-string">"#ajax-loader-animation"</span>).hide();</pre>
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/hunterloftis/awaiting/blob/62026b6789c36cb8b17826e279ce7bed25803a19/lib/awaiting.js#L427-L431'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/hunterloftis/awaiting/blob/4b8d26d7769950db72afd210bec29a016fd0637c/lib/awaiting.js#L428-L432'>
       <span>lib/awaiting.js</span>
       </a>
     
@@ -1434,7 +1526,7 @@ If <code>promise</code> throws an Error, returns <code>undefined</code>.</p>
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/hunterloftis/awaiting/blob/62026b6789c36cb8b17826e279ce7bed25803a19/lib/awaiting.js#L502-L506'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/hunterloftis/awaiting/blob/4b8d26d7769950db72afd210bec29a016fd0637c/lib/awaiting.js#L503-L507'>
       <span>lib/awaiting.js</span>
       </a>
     
@@ -1508,7 +1600,7 @@ failingPromise()
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/hunterloftis/awaiting/blob/62026b6789c36cb8b17826e279ce7bed25803a19/lib/awaiting.js#L474-L478'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/hunterloftis/awaiting/blob/4b8d26d7769950db72afd210bec29a016fd0637c/lib/awaiting.js#L475-L479'>
       <span>lib/awaiting.js</span>
       </a>
     
@@ -1584,7 +1676,7 @@ failingPromise()
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/hunterloftis/awaiting/blob/62026b6789c36cb8b17826e279ce7bed25803a19/lib/awaiting.js#L132-L135'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/hunterloftis/awaiting/blob/4b8d26d7769950db72afd210bec29a016fd0637c/lib/awaiting.js#L133-L136'>
       <span>lib/awaiting.js</span>
       </a>
     
