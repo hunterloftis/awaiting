@@ -1,17 +1,17 @@
 const a = require('..')
 const assert = require('chai').assert
 
-describe('awaitable', () => {
-  const awaitableRead = a.awaitable(read)
+describe('awaited', () => {
+  const awaitedRead = a.awaited(read)
 
-  it('awaitable correctly handles resolution', async () => {
-    const result = await awaitableRead('foo.txt')
+  it('awaited correctly handles resolution', async () => {
+    const result = await awaitedRead('foo.txt')
     assert.equal(result, 'contents')
   })
 
-  it('awaitable correctly handles rejection', async () => {
+  it('awaited correctly handles rejection', async () => {
     try {
-      const result = await awaitableRead('bar.txt')
+      const result = await awaitedRead('bar.txt')
       throw new Error('should fail')
     }
     catch (err) {
