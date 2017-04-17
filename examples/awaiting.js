@@ -44,6 +44,7 @@ module.exports = {
   failure,
   success,
   result,
+  awaitable,
   throw: throwRejections,
   swallow: swallowRejections,
   ErrorList
@@ -505,6 +506,23 @@ function swallowRejections () {
   process.removeListener('unhandledRejection', throwOnRejection)
   process.removeListener('unhandledRejection', swallowOnRejection)
   process.on('unhandledRejection', swallowOnRejection)
+}
+
+/**
+ * Wraps a node style function (see `callback`) into a new function, which instead of taking a callback
+ * function, returns an async function (`Promise`). This `Promise` resolves if the first (error) argument of the
+ * callback was called with a falsy value, rejects with the error otherwise. Takes the rest of the
+ * arguments as the original function `fn`.
+ *
+ * @returns {function}
+ * @example
+ *
+ * const fs = require('fs')
+ * const readFile = a.awaitable(fs.readFile)
+ * const contents = await readFile('foo.txt', 'utf-8')
+ */
+function awaitable (fn) {
+  return async (...args) => callback(fn, ...args)
 }
 
 function throwOnRejection (err, promise) { throw err }
