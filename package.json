@@ -37,7 +37,7 @@
     "safe": "git diff-index --quiet master --",
     "build": "yarn install && yarn test && yarn browserify",
     "release": "yarn safe && yarn version && npm publish --registry 'https://registry.npmjs.org/'",
-    "build:docs": "documentation build -f html --sort-order alpha -g -o docs && cp -r examples docs",
+    "build:docs": "documentation build -f html -g -o docs && cp -r examples docs",
     "release:docs": "yarn safe && git subtree push --prefix docs origin gh-pages"
   },
   "main": "lib/awaiting.js",
