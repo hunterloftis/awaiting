@@ -46,7 +46,7 @@ async function main() {
 
 ### In a browser
 
-Use [browser/awaiting.umd.js](https://raw.githubusercontent.com/hunterloftis/awaiting/master/dist/awaiting.umd.js):
+Use [dist/awaiting.umd.js](https://raw.githubusercontent.com/hunterloftis/awaiting/master/dist/awaiting.umd.js):
 
 ```html
 <script src='awaiting.js'></script>
