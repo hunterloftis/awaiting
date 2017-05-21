@@ -98,9 +98,7 @@ ErrorList.prototype[Symbol.iterator] = function* () {
  * // => 5000
  */
 async function delay (ms) {
-  return new Promise((resolve, reject) => {
-    setTimeout(resolve, ms);
-  })
+  return new Promise(resolve => setTimeout(resolve, ms))
 }
 
 /**
@@ -413,9 +411,10 @@ async function map (list, concurrency, fn) {
  * })
  */
 async function failure (promise) {
-  return new Promise((resolve, reject) => {
-    promise.then(() => resolve(undefined)).catch(resolve);
-  })
+  return Promise.resolve()
+    .then(() => promise)
+    .then(() => undefined)
+    .catch(err => err)
 }
 
 /**
@@ -430,9 +429,9 @@ async function failure (promise) {
  * if (isNodeProject) doSomething()
  */
 async function success (promise) {
-  return new Promise((resolve, reject) => {
-    promise.then(resolve).catch(err => resolve(undefined)); // eslint-disable-line
-  })
+  return Promise.resolve()
+    .then(() => promise)
+    .catch(() => undefined) // eslint-disable-line
 }
 
 /**
@@ -448,9 +447,9 @@ async function success (promise) {
  * $("#ajax-loader-animation").hide();
  */
 async function result (promise) {
-  return new Promise((resolve, reject) => {
-    promise.then(resolve).catch(err => resolve(err));
-  })
+  return Promise.resolve()
+    .then(() => promise)
+    .catch(err => err)
 }
 
 /**
