@@ -46,7 +46,7 @@ async function main() {
 
 ### In a browser
 
-Use [browser/awaiting.js](https://raw.githubusercontent.com/hunterloftis/awaiting/master/browser/awaiting.js):
+Use [dist/awaiting.umd.js](https://raw.githubusercontent.com/hunterloftis/awaiting/master/dist/awaiting.umd.js):
 
 ```html
 <script src='awaiting.js'></script>
@@ -54,12 +54,16 @@ Use [browser/awaiting.js](https://raw.githubusercontent.com/hunterloftis/awaitin
   const a = awaiting
 
   main()
-  
+
   async function main() {
     await a.delay(1000)
   }
 </script>
 ```
+
+### With Babel
+
+`import` whatever you want, you hipster.
 
 ## Examples
 
@@ -176,5 +180,4 @@ $ yarn build
 $ yarn install
 $ yarn test
 $ yarn test:browser
-$ yarn coverage:report
 ```
