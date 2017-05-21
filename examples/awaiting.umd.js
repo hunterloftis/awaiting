@@ -25,6 +25,7 @@
  * [![Build Status](https://travis-ci.org/hunterloftis/awaiting.svg?branch=master)](https://travis-ci.org/hunterloftis/awaiting)
  * [![Coverage Status](https://coveralls.io/repos/hunterloftis/awaiting/badge.svg?branch=master)](https://coveralls.io/r/hunterloftis/awaiting?branch=master)
  *
+ * @name Awaiting.js
  * @license MIT
  * @file
  * @example
@@ -34,7 +35,7 @@
  * await a.delay(1000)
  */
 
-/**
+ /**
  * Iterable Error type
  *
  * Functions that operate on lists throw ErrorLists,
@@ -62,30 +63,30 @@
  *   }
  * }
  */
-function ErrorList (message) {
-  this.name = 'ErrorList';
-  this.message = message;
-  this.stack = (new Error()).stack;
-  this.errors = [];
-  Object.defineProperty(this, 'length', {
-    get: function () { return this.errors.length }
-  });
-}
-ErrorList.prototype = Object.create(Error.prototype);
-ErrorList.prototype.constructor = ErrorList;
-ErrorList.prototype.add = function (err) {
-  this.errors.push(err);
-};
-ErrorList.prototype.get = function (index) {
-  return this.errors[index]
-};
-ErrorList.prototype[Symbol.iterator] = function* () {
-  let i = 0;
-  while (i < this.errors.length) {
-    yield this.errors[i];
-    i++;
-  }
-};
+ function ErrorList (message) {
+   this.name = 'ErrorList';
+   this.message = message;
+   this.stack = (new Error()).stack;
+   this.errors = [];
+   Object.defineProperty(this, 'length', {
+     get: function () { return this.errors.length }
+   });
+ }
+ ErrorList.prototype = Object.create(Error.prototype);
+ ErrorList.prototype.constructor = ErrorList;
+ ErrorList.prototype.add = function (err) {
+   this.errors.push(err);
+ };
+ ErrorList.prototype.get = function (index) {
+   return this.errors[index]
+ };
+ ErrorList.prototype[Symbol.iterator] = function* () {
+   let i = 0;
+   while (i < this.errors.length) {
+     yield this.errors[i];
+     i++;
+   }
+ };
 
 /**
  * Waits for `ms` milliseconds to pass.
@@ -99,9 +100,9 @@ ErrorList.prototype[Symbol.iterator] = function* () {
  * console.log(Date.now() - start)
  * // => 5000
  */
-async function delay (ms) {
-  return new Promise(resolve => setTimeout(resolve, ms))
-}
+ async function delay (ms) {
+   return new Promise(resolve => setTimeout(resolve, ms))
+ }
 
 /**
  * Waits for `date`.
@@ -114,10 +115,10 @@ async function delay (ms) {
  * await a.time(nextYear)
  * // => this will run until the end of 2017
  */
-async function time (date) {
-  const delta = Math.max(date.getTime() - Date.now(), 0);
-  return await delay(delta)
-}
+ async function time (date) {
+   const delta = Math.max(date.getTime() - Date.now(), 0);
+   return await delay(delta)
+ }
 
 /**
  * Waits for the value of `goal`, limited by the resolution of `limiter`.
@@ -132,13 +133,13 @@ async function time (date) {
  * // throw if flowers.jpg can't be retrieved in < 5 seconds
  * await a.limit(fetch('flowers.jpg'), 5000)
  */
-async function limit (goal, limiter) {
-  return new Promise((resolve, reject) => {
-    const limitFn = typeof limiter === 'number'
+ async function limit (goal, limiter) {
+   return new Promise((resolve, reject) => {
+     const limitFn = typeof limiter === 'number'
       ? delay(limiter)
       : limiter;
-    let completed = false;
-    goal
+     let completed = false;
+     goal
       .then(result => {
         if (complete()) return
         resolve(result);
@@ -147,7 +148,7 @@ async function limit (goal, limiter) {
         if (complete()) return
         reject(err);
       });
-    limitFn
+     limitFn
       .then(result => {
         if (complete()) return
         reject(new Error('limit exceeded'));
@@ -156,13 +157,13 @@ async function limit (goal, limiter) {
         if (complete()) return
         reject(err);
       });
-    function complete () {
-      if (completed) return true
-      completed = true;
-      return false
-    }
-  })
-}
+     function complete () {
+       if (completed) return true
+       completed = true;
+       return false
+     }
+   })
+ }
 
 /**
  * Waits for `emitter` to emit an `eventName` event.
@@ -174,13 +175,13 @@ async function limit (goal, limiter) {
  *
  * await a.event(server, 'listen')
  */
-async function event (emitter, eventName) {
-  return new Promise((resolve, reject) => {
-    emitter.once(eventName, (...args) => {
-      resolve([...args]);
-    });
-  })
-}
+ async function event (emitter, eventName) {
+   return new Promise((resolve, reject) => {
+     emitter.once(eventName, (...args) => {
+       resolve([...args]);
+     });
+   })
+ }
 
 /**
  * Calls a function `func` that takes arguments `args` and an `(err, result)` callback.
@@ -195,14 +196,14 @@ async function event (emitter, eventName) {
  * console.log(result)
  * // => 'the text of the file'
  */
-async function callback (fn, ...args) {
-  return new Promise((resolve, reject) => {
-    fn(...args, (err, result) => {
-      if (err) return reject(err)
-      resolve(result);
-    });
-  })
-}
+ async function callback (fn, ...args) {
+   return new Promise((resolve, reject) => {
+     fn(...args, (err, result) => {
+       if (err) return reject(err)
+       resolve(result);
+     });
+   })
+ }
 
 /**
  * Wraps a node style function (see `callback`) into a new function, which instead of taking a callback
@@ -217,11 +218,11 @@ async function callback (fn, ...args) {
  * const readFile = a.awaited(fs.readFile)
  * const contents = await readFile('foo.txt', 'utf-8')
  */
-function awaited (fn) {
-  return async (...args) => callback(fn, ...args)
-}
+ function awaited (fn) {
+   return async (...args) => callback(fn, ...args)
+ }
 
-function throwOnRejection (err, promise) { throw err }
+ function throwOnRejection (err, promise) { throw err }
 function swallowOnRejection (err, promise) {} // eslint-disable-line
 
 /**
@@ -234,10 +235,10 @@ function swallowOnRejection (err, promise) {} // eslint-disable-line
  *
  * const file = await a.single([ fetch(remoteFile), read(localFile) ])
  */
-async function single (list, ignore = 0) {
-  const results = await set(list, 1, ignore);
-  return results[0]
-}
+ async function single (list, ignore = 0) {
+   const results = await set(list, 1, ignore);
+   return results[0]
+ }
 
 /**
  * Waits for the first `count` Promises in `list` to resolve.
@@ -257,30 +258,30 @@ async function single (list, ignore = 0) {
  * console.log(`fastest nameservers: ${first}, ${second}`)
  */
 
-async function set (list, count = Infinity, ignore = 0) {
-  return new Promise((resolve, reject) => {
-    const goal = Math.min(list.length, count);
-    const limit = Math.min(list.length - goal, ignore);
-    const results = [];
-    const failures = new ErrorList('too many failures');
-    list.forEach(promise => promise.then(success).catch(error));
+ async function set (list, count = Infinity, ignore = 0) {
+   return new Promise((resolve, reject) => {
+     const goal = Math.min(list.length, count);
+     const limit = Math.min(list.length - goal, ignore);
+     const results = [];
+     const failures = new ErrorList('too many failures');
+     list.forEach(promise => promise.then(success).catch(error));
 
-    function success (result) {
-      if (failures.length > limit) return
-      results.push(result);
-      if (results.length === goal) {
-        resolve(results);
-      }
-    }
-    function error (err) {
-      if (failures.length > limit) return
-      if (results.length >= goal) return
-      failures.add(err);
+     function success (result) {
+       if (failures.length > limit) return
+       results.push(result);
+       if (results.length === goal) {
+         resolve(results);
+       }
+     }
+     function error (err) {
+       if (failures.length > limit) return
+       if (results.length >= goal) return
+       failures.add(err);
       // TODO: reject with an Iterable custom Error that includes all failures
-      if (failures.length > limit) reject(failures);
-    }
-  })
-}
+       if (failures.length > limit) reject(failures);
+     }
+   })
+ }
 
 /**
  * Waits for all Promises in `list` to resolve.
@@ -296,31 +297,31 @@ async function set (list, count = Infinity, ignore = 0) {
  * console.log(results.length)
  * // => 3
  */
-async function list (list, ignore = 0) {
-  return new Promise((resolve, reject) => {
-    const results = [];
-    const failures = new ErrorList('too many failures');
-    const complete = () => count + failures.length === list.length;
-    let count = 0;
-    list.forEach((promise, index) => {
-      promise.then(success).catch(error);
+ async function list (list, ignore = 0) {
+   return new Promise((resolve, reject) => {
+     const results = [];
+     const failures = new ErrorList('too many failures');
+     const complete = () => count + failures.length === list.length;
+     let count = 0;
+     list.forEach((promise, index) => {
+       promise.then(success).catch(error);
 
-      function success (result) {
-        if (failures.length > ignore) return
-        results[index] = result;
-        count++;
-        if (complete()) resolve(results);
-      }
-      function error (err) {
-        if (failures.length > ignore) return
-        results[index] = undefined;
-        failures.add(err);
-        if (failures.length > ignore) reject(failures);
-        else if (complete()) resolve(results);
-      }
-    });
-  })
-}
+       function success (result) {
+         if (failures.length > ignore) return
+         results[index] = result;
+         count++;
+         if (complete()) resolve(results);
+       }
+       function error (err) {
+         if (failures.length > ignore) return
+         results[index] = undefined;
+         failures.add(err);
+         if (failures.length > ignore) reject(failures);
+         else if (complete()) resolve(results);
+       }
+     });
+   })
+ }
 
 /**
  * Waits for all Promises in the keys of `container` to resolve.
@@ -338,18 +339,18 @@ async function list (list, ignore = 0) {
  * console.log(results.pictures, results.comments, results.tweets)
  */
 
-async function object (container, ignore = 0) {
-  const containsPromise = key => typeof container[key].then === 'function';
-  const keys = Object.keys(container).filter(containsPromise);
-  const promises = keys.map(key => container[key]);
-  const results = await list(promises, ignore);
-  const obj = Object.assign({}, container);
-  results.forEach((result, index) => {
-    const key = keys[index];
-    obj[key] = result;
-  });
-  return obj
-}
+ async function object (container, ignore = 0) {
+   const containsPromise = key => typeof container[key].then === 'function';
+   const keys = Object.keys(container).filter(containsPromise);
+   const promises = keys.map(key => container[key]);
+   const results = await list(promises, ignore);
+   const obj = Object.assign({}, container);
+   results.forEach((result, index) => {
+     const key = keys[index];
+     obj[key] = result;
+   });
+   return obj
+ }
 
 /**
  * Passes each item in `list` to the Promise-returning function `fn`,
@@ -366,38 +367,38 @@ async function object (container, ignore = 0) {
  * // pull hundreds of pages from a site without getting blocked
  * const pages = await a.map(urls, 3, fetch)
  */
-async function map (list, concurrency, fn) {
-  return new Promise((resolve, reject) => {
-    const results = [];
-    let running = 0;
-    let index = 0;
+ async function map (list, concurrency, fn) {
+   return new Promise((resolve, reject) => {
+     const results = [];
+     let running = 0;
+     let index = 0;
 
-    update();
+     update();
 
-    function update () {
-      if (index === list.length && running === 0) {
-        return resolve(results)
-      }
-      while (running < concurrency && index < list.length) {
-        fn(list[index]).then(success(index)).catch(error);
-        index++;
-        running++;
-      }
-    }
-    function success (i) {
-      return result => {
-        running--;
-        results[i] = result;
-        update();
-      }
-    }
-    function error (err) {
-      running--;
-      index = Infinity;
-      reject(err);
-    }
-  })
-}
+     function update () {
+       if (index === list.length && running === 0) {
+         return resolve(results)
+       }
+       while (running < concurrency && index < list.length) {
+         fn(list[index]).then(success(index)).catch(error);
+         index++;
+         running++;
+       }
+     }
+     function success (i) {
+       return result => {
+         running--;
+         results[i] = result;
+         update();
+       }
+     }
+     function error (err) {
+       running--;
+       index = Infinity;
+       reject(err);
+     }
+   })
+ }
 
 /**
  * Waits for `promise` to reject, returning the Error object.
@@ -412,12 +413,12 @@ async function map (list, concurrency, fn) {
  *   assert.equal(err.message, 'foo')
  * })
  */
-async function failure (promise) {
-  return Promise.resolve()
+ async function failure (promise) {
+   return Promise.resolve()
     .then(() => promise)
     .then(() => undefined)
     .catch(err => err)
-}
+ }
 
 /**
  * Waits for the value of `promise`.
@@ -430,11 +431,11 @@ async function failure (promise) {
  * const isNodeProject = await a.success(a.callback(fs.access, packageJSON))
  * if (isNodeProject) doSomething()
  */
-async function success (promise) {
-  return Promise.resolve()
+ async function success (promise) {
+   return Promise.resolve()
     .then(() => promise)
     .catch(() => undefined) // eslint-disable-line
-}
+ }
 
 /**
  * Waits for `promise` to resolve or reject.
@@ -448,11 +449,11 @@ async function success (promise) {
  * await a.result(loadAjaxData())
  * $("#ajax-loader-animation").hide();
  */
-async function result (promise) {
-  return Promise.resolve()
+ async function result (promise) {
+   return Promise.resolve()
     .then(() => promise)
     .catch(err => err)
-}
+ }
 
 /**
  * Provides a stack trace for unhandled rejections instead of the default message string.
@@ -477,11 +478,11 @@ async function result (promise) {
  * // =>    at fail (/Users/hloftis/code/awaiting/test/fixtures/rejection-throw.js:7:9)
  * // =>    at Object.<anonymous> (/Users/hloftis/code/awaiting/test/fixtures/rejection-throw.js:4:1)
  */
-function throwRejections () {
-  process.removeListener('unhandledRejection', throwOnRejection);
-  process.removeListener('unhandledRejection', swallowOnRejection);
-  process.on('unhandledRejection', throwOnRejection);
-}
+ function throwRejections () {
+   process.removeListener('unhandledRejection', throwOnRejection);
+   process.removeListener('unhandledRejection', swallowOnRejection);
+   process.on('unhandledRejection', throwOnRejection);
+ }
 
 /**
  * Silently swallows unhandled rejections.
@@ -505,11 +506,11 @@ function throwRejections () {
  * failingPromise()
  * // (no output)
  */
-function swallowRejections () {
-  process.removeListener('unhandledRejection', throwOnRejection);
-  process.removeListener('unhandledRejection', swallowOnRejection);
-  process.on('unhandledRejection', swallowOnRejection);
-}
+ function swallowRejections () {
+   process.removeListener('unhandledRejection', throwOnRejection);
+   process.removeListener('unhandledRejection', swallowOnRejection);
+   process.on('unhandledRejection', swallowOnRejection);
+ }
 
 exports.delay = delay;
 exports.time = time;
