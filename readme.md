@@ -65,6 +65,10 @@ Use [dist/awaiting.umd.js](https://raw.githubusercontent.com/hunterloftis/awaiti
 
 `import` whatever you want, you hipster.
 
+### CDN
+
+* [jsdelivr](https://www.jsdelivr.com/package/npm/awaiting)
+
 ## Examples
 
 Check out a
